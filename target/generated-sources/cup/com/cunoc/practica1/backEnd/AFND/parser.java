@@ -242,8 +242,18 @@ public class parser extends java_cup.runtime.lr_parser {
         (s.left)+ " Columna "+s.right+". Componente " + s.value + " no reconocido."); 
     } 
 
-    // grafica auxi: 
+    // grafica auxi almacenar la instruccion anteriro 
     private Grafica graficaAux;
+
+        // Parametros de la gráfica
+    private HashMap<String, List<List<String>>> graphicsMap = new HashMap<>();
+
+    private List<Grafica> listaGrafica = new ArrayList<>();
+
+    // Método para obtener el HashMap de gráficos
+    public List<Grafica> getListaGrafica() {
+        return listaGrafica;
+    }
 
 
     // reporte de operaciones matemáticas
@@ -254,8 +264,7 @@ public class parser extends java_cup.runtime.lr_parser {
         return reporteOperaciones;
     }
 
-    // almacenar la instrucción de la gráfica
-    private Instruction ultimaGrafica = null;
+   
 
     // reporte de número de color
     private HashMap<String, Integer> reporteColor = new HashMap<>();
@@ -312,13 +321,7 @@ public class parser extends java_cup.runtime.lr_parser {
         return reporteError;
     }
 
-    // Parametros de la gráfica
-    private HashMap<String, List<List<String>>> graphicsMap = new HashMap<>();
 
-    // Método para obtener el HashMap de gráficos
-    public HashMap<String, List<List<String>>> getGraphicsMap() {
-        return graphicsMap;
-    }
 
 
 
@@ -419,12 +422,11 @@ class CUP$parser$actions {
 		 reporteFigura.put("CIRCULO", reporteFigura.get("CIRCULO") +1); 
    System.out.println(" graficar circulo ( "+ n +", "+ posx +" , "+ posy +" , "+ r + " , "+ c+ " )");
 
+    if (graficaAux !=null){
+        listaGrafica.add(graficaAux);  
+    }
 
     graficaAux = new Circulo(n,null,posx,posy,c,r);
-
-    System.out.println("nombre:  "+graficaAux.getNombre());
-
-
 
  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("instruccion",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-12)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -452,6 +454,14 @@ class CUP$parser$actions {
 		String c = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		  reporteFigura.put("CUADRADO", reporteFigura.get("CUADRADO") +1);
                     System.out.println(" graficar cuadrado ( "+ n +", "+ posx +" , "+ posy +" , "+ l + " , "+ c+ " )");
+
+                        if (graficaAux !=null){
+                            listaGrafica.add(graficaAux);
+        
+                         }
+
+                        graficaAux = new Cuadrado(n,null,posx,posy,c,l);
+
                   
               CUP$parser$result = parser.getSymbolFactory().newSymbol("instruccion",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-12)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -481,6 +491,13 @@ class CUP$parser$actions {
 		String c = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		 reporteFigura.put("RECTANGULO", reporteFigura.get("RECTANGULO") +1);
                    System.out.println(" graficar rectangulo ( "+ n +", "+ posx +" , "+ posy +" , "+ a+" , "+ al + " , "+ c+" )"); 
+                
+                        if (graficaAux !=null){
+                            listaGrafica.add(graficaAux);
+        
+                         }
+
+                        graficaAux = new Rectangulo(n,null,posx,posy,c,a,al);
 
                  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("instruccion",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-14)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -511,7 +528,12 @@ class CUP$parser$actions {
 		String c = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		 reporteFigura.put("LINEA", reporteFigura.get("LINEA") +1);
                    System.out.println(" graficar linea ( "+ n +", "+ posx +" , "+ posy +" , "+" , "+ posx2+" , "+ posy2+ " , "+ c+ " )");
+                        if (graficaAux !=null){
+                            listaGrafica.add(graficaAux);
+        
+                         }
 
+                        graficaAux = new Cuadrado(n,null,posx,posy,c,l);
                  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("instruccion",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-14)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -544,6 +566,12 @@ class CUP$parser$actions {
 		String c = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		  reporteFigura.put("POLIGONO", reporteFigura.get("POLIGONO") +1); 
                     System.out.println(" graficar circulo ( "+ n +", "+ posx +" , "+ posy +" , "+ cl + " , "+ l+" , "+h+" , "+ c +" )");
+                      if (graficaAux !=null){
+                            listaGrafica.add(graficaAux);
+        
+                         }
+
+                        graficaAux = new Poligono(n,null,posx,posy,c,cl,l,h);
                  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("instruccion",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-16)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -566,6 +594,16 @@ class CUP$parser$actions {
 		int orright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Double or = (Double)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		 System.out.println(ta);
+
+                 Animacion nuevaAnimacion = new Animacion(ta,dx,dy,or);
+                    if(graficaAux!=null){
+                        graficaAux.setAnimacion(nuevaAnimacion);
+                        graficaAux= null;                        
+                    }else {
+                        System.out.println(" no hay grafica anteriro :C")
+                    }
+
+                 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("instruccion",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-10)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

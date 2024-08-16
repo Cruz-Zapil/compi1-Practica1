@@ -4,13 +4,22 @@ import com.cunoc.practica1.backEnd.objetos.animation.Animacion;
 
 public class Cuadrado extends Grafica{
 
-    private float lado;
+    private double lado;
 
-    public Cuadrado(String nombre, Animacion animacion, float posx, float posy, String color, float lado) {
+    public Cuadrado(String nombre, Animacion animacion, Double posx, Double posy, String color, Double l) {
         super(nombre, animacion, posx, posy, color);
        
-        this.lado = lado;
+        this.lado = l;
         
     }
+
+
+    @Override
+    public void setAnimacion(Animacion animacion) {
+        System.out.println(" animacion agregada "+ super.getNombre());
+        super.setAnimacion(animacion);
+    }
+
+    
     
 }

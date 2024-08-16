@@ -3,15 +3,15 @@ package com.cunoc.practica1.backEnd.objetos.animation;
 public class Animacion {
 
     private String tipoAnimacion;
-    private float destinoX;
-    private float destinoY;
-    private float orden;
+    private Double destinoX;
+    private Double destinoY;
+    private Double orden;
 
-    public Animacion(String tipoAnimacion, float destinoX, float destinoY, float orden) {
+    public Animacion(String tipoAnimacion, Double dx, Double dy, Double or) {
         this.tipoAnimacion = tipoAnimacion;
-        this.destinoX = destinoX;
-        this.destinoY = destinoY;
-        this.orden = orden;
+        this.destinoX = dx;
+        this.destinoY = dy;
+        this.orden = or;
     }
 
     public String getTipoAnimacion() {
@@ -22,30 +22,30 @@ public class Animacion {
         this.tipoAnimacion = tipoAnimacion;
     }
 
-    public float getDestinoX() {
+    public Double getDestinoX() {
         return destinoX;
     }
 
-    public void setDestinoX(int destinoX) {
+    public void setDestinoX(Double destinoX) {
         this.destinoX = destinoX;
     }
 
-    public float getDestinoY() {
+    public Double getDestinoY() {
         return destinoY;
     }
 
-    public void setDestinoY(int destinoY) {
+    public void setDestinoY(Double destinoY) {
         this.destinoY = destinoY;
     }
 
-    public float getOrden() {
+    public Double getOrden() {
         return orden;
     }
 
-    public void setOrden(int orden) {
+    public void setOrden(Double orden) {
         this.orden = orden;
     }
 
-    
+   
     
 }

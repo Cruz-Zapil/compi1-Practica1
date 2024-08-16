@@ -5,7 +5,7 @@ import com.cunoc.practica1.backEnd.objetos.animation.Animacion;
 public class Grafica {
 
     private String nombre;
-    private Animacion animacion;
+    protected Animacion animacion;
     private double posx;
     private double posy;
     private String color;

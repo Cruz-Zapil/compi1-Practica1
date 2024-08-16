@@ -1,7 +1,12 @@
 package com.cunoc.practica1.backEnd.AFND;
 
 import com.cunoc.practica1.backEnd.objetos.animation.graficas.Grafica;
+import com.cunoc.practica1.backEnd.objetos.animation.graficas.Linea;
+import com.cunoc.practica1.backEnd.objetos.animation.graficas.Poligono;
+import com.cunoc.practica1.backEnd.objetos.animation.graficas.Rectangulo;
+import com.cunoc.practica1.backEnd.objetos.animation.Animacion;
 import com.cunoc.practica1.backEnd.objetos.animation.graficas.Circulo;
+import com.cunoc.practica1.backEnd.objetos.animation.graficas.Cuadrado;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,8 +34,18 @@ parser code {:
         (s.left)+ " Columna "+s.right+". Componente " + s.value + " no reconocido."); 
     } 
 
-    // grafica auxi: 
+    // grafica auxi almacenar la instruccion anteriro 
     private Grafica graficaAux;
+
+        // Parametros de la gráfica
+    private HashMap<String, List<List<String>>> graphicsMap = new HashMap<>();
+
+    private List<Grafica> listaGrafica = new ArrayList<>();
+
+    // Método para obtener el HashMap de gráficos
+    public List<Grafica> getListaGrafica() {
+        return listaGrafica;
+    }
 
 
     // reporte de operaciones matemáticas
@@ -41,8 +56,7 @@ parser code {:
         return reporteOperaciones;
     }
 
-    // almacenar la instrucción de la gráfica
-    private Instruction ultimaGrafica = null;
+   
 
     // reporte de número de color
     private HashMap<String, Integer> reporteColor = new HashMap<>();
@@ -99,13 +113,7 @@ parser code {:
         return reporteError;
     }
 
-    // Parametros de la gráfica
-    private HashMap<String, List<List<String>>> graphicsMap = new HashMap<>();
 
-    // Método para obtener el HashMap de gráficos
-    public HashMap<String, List<List<String>>> getGraphicsMap() {
-        return graphicsMap;
-    }
 
 
 :}
@@ -141,34 +149,69 @@ instruccion ::= GRAFICAR CIRCULO LPAREN NOMBRE:n COMA expre:posx COMA expre:posy
 {: reporteFigura.put("CIRCULO", reporteFigura.get("CIRCULO") +1); 
    System.out.println(" graficar circulo ( "+ n +", "+ posx +" , "+ posy +" , "+ r + " , "+ c+ " )");
 
+    if (graficaAux !=null){
+        listaGrafica.add(graficaAux);  
+    }
 
     graficaAux = new Circulo(n,null,posx,posy,c,r);
-
-    System.out.println("nombre:  "+graficaAux.getNombre());
-
-
 
  :}
                 | GRAFICAR CUADRADO LPAREN NOMBRE:n COMA expre:posx COMA expre:posy COMA expre:l COMA color:c RPAREN 
                 {:  reporteFigura.put("CUADRADO", reporteFigura.get("CUADRADO") +1);
                     System.out.println(" graficar cuadrado ( "+ n +", "+ posx +" , "+ posy +" , "+ l + " , "+ c+ " )");
+
+                        if (graficaAux !=null){
+                            listaGrafica.add(graficaAux);
+        
+                         }
+
+                        graficaAux = new Cuadrado(n,null,posx,posy,c,l);
+
                   :}
                 | GRAFICAR RECTANGULO LPAREN NOMBRE:n COMA expre:posx COMA expre:posy COMA expre:a COMA expre:al COMA color:c RPAREN
                 {: reporteFigura.put("RECTANGULO", reporteFigura.get("RECTANGULO") +1);
                    System.out.println(" graficar rectangulo ( "+ n +", "+ posx +" , "+ posy +" , "+ a+" , "+ al + " , "+ c+" )"); 
+                
+                        if (graficaAux !=null){
+                            listaGrafica.add(graficaAux);
+        
+                         }
+
+                        graficaAux = new Rectangulo(n,null,posx,posy,c,a,al);
 
                  :}
                 | GRAFICAR LINEA LPAREN NOMBRE:n COMA expre:posx COMA expre:posy COMA expre:posx2 COMA expre:posy2 COMA color:c RPAREN
                 {: reporteFigura.put("LINEA", reporteFigura.get("LINEA") +1);
                    System.out.println(" graficar linea ( "+ n +", "+ posx +" , "+ posy +" , "+" , "+ posx2+" , "+ posy2+ " , "+ c+ " )");
+                        if (graficaAux !=null){
+                            listaGrafica.add(graficaAux);
+        
+                         }
 
+                        graficaAux = new Cuadrado(n,null,posx,posy,c,l);
                  :}
                 | GRAFICAR POLIGONO LPAREN NOMBRE:n COMA expre:posx COMA expre:posy COMA expre:cl COMA expre:l COMA expre:h COMA color:c RPAREN
                 {:  reporteFigura.put("POLIGONO", reporteFigura.get("POLIGONO") +1); 
                     System.out.println(" graficar circulo ( "+ n +", "+ posx +" , "+ posy +" , "+ cl + " , "+ l+" , "+h+" , "+ c +" )");
+                      if (graficaAux !=null){
+                            listaGrafica.add(graficaAux);
+        
+                         }
+
+                        graficaAux = new Poligono(n,null,posx,posy,c,cl,l,h);
                  :}
                  | ANIMAR OBJETO_ANTERIOR LPAREN tipo_animacion:ta COMA expre:dx COMA expre:dy COMA expre:or RPAREN
-                 {: System.out.println(ta);:};
+                 {: System.out.println(ta);
+
+                 Animacion nuevaAnimacion = new Animacion(ta,dx,dy,or);
+                    if(graficaAux!=null){
+                        graficaAux.setAnimacion(nuevaAnimacion);
+                        graficaAux= null;                        
+                    }else {
+                        System.out.println(" no hay grafica anteriro :C");
+                    }
+
+                 :};
 
 color ::= AZUL:az {: reporteColor.put("AZUL", reporteColor.get("AZUL") + 1);  RESULT = az; :}
         | ROJO:ro {: reporteColor.put("ROJO", reporteColor.get("ROJO") + 1); RESULT = ro; :}

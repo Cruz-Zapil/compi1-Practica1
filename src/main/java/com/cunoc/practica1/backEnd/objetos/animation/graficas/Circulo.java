@@ -14,5 +14,20 @@ public class Circulo extends Grafica{
     
     }
 
+    public Double getRadio() {
+        return radio;
+    }
+
+    public void setRadio(Double radio) {
+        this.radio = radio;
+    }
+
+    @Override
+    public void setAnimacion(Animacion animacion) {
+        System.out.println(" animacion agregada "+ super.getNombre());
+        super.setAnimacion(animacion);
+    }
+
+
     
 }
