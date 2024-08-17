@@ -1,18 +1,133 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.cunoc.practica1</groupId>
   <artifactId>practica1</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>v1.0</version>
   <name>practica1</name>
   <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+  </properties>
+
+
+  <!--   espeficar las dependencias a utilizar en este proyecto   -->
   <dependencies>
+
+    <!--   dependencia de JUnit   -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.8.2</version>
       <scope>test</scope>
     </dependency>
+
+    <!-- EDependencia de CUP-->
+    <dependency>
+      <groupId>com.github.vbmacher</groupId>
+      <artifactId>java-cup-runtime</artifactId>
+      <version>11b-20160615-3</version>
+    </dependency>
+
+
   </dependencies>
+
+
+  <!--   especificar el plugin de maven a utilizar   -->
+  <build>
+
+    <!--   plugin de maven -->
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <release>17</release>
+        </configuration>
+      </plugin>
+
+      <!--   plugin de CUP   -->
+
+      <plugin>
+        <groupId>com.github.vbmacher</groupId>
+        <artifactId>cup-maven-plugin</artifactId>
+        <version>11b-20160615-3</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <outputDirectory>${project.build.directory}/generated-sources/cup</outputDirectory>
+        </configuration>
+      </plugin>
+
+
+      <!--   plugin de ANTLR   -->
+      <plugin>
+        <groupId>org.antlr</groupId>
+        <artifactId>antlr4-maven-plugin</artifactId>
+        <version>4.3</version>
+        <executions>
+          <execution>
+            <id>antlr</id>
+            <phase>generated-sources</phase>
+            <goals>
+              <goal>antlr4</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!--   plugin de JFLEX   -->
+
+      <plugin>
+        <groupId>de.jflex</groupId>
+        <artifactId>jflex-maven-plugin</artifactId>
+        <version>1.9.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!--   plugin de maven assembly   -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <!--   maven assemby generador de jars, e incluye las dependencias en el jar    -->
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>assemble-single</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <archive>
+                <manifest>
+                  <mainClass>com.cunoc.practica1.App</mainClass>
+                </manifest>
+              </archive>
+              <descriptorRefs>
+               
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+                
+              </descriptorRefs>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
