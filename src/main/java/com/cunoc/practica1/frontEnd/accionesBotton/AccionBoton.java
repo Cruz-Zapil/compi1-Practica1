@@ -13,6 +13,7 @@ import com.cunoc.practica1.frontEnd.compnents.ConstructorBotton;
 import com.cunoc.practica1.frontEnd.paneles.panelEscritura.Panel1;
 import com.cunoc.practica1.frontEnd.paneles.panelEscritura.Panel1Escritura;
 import com.cunoc.practica1.frontEnd.paneles.panelGrafico.PanelGrafico;
+import com.cunoc.practica1.frontEnd.paneles.panelReporte.PanelReporte;
 
 
 public class AccionBoton implements ActionListener {
@@ -39,14 +40,9 @@ public class AccionBoton implements ActionListener {
             } else if (botones.getText().equals("Grafico")) {
                 System.out.println("Grafico ");
 
-                LogicaArchivos logicaArchivos = new LogicaArchivos();
-                String rutaCarpeta = logicaArchivos.obtenerRutaCarpeta();
-                if (rutaCarpeta != null) {
-                    VentanPrincipal.addPanelIzquiedo(panelGrafico);
-                    LogicaArchivos.lecturaGraficos = rutaCarpeta;
-                } else {
-                    JOptionPane.showMessageDialog(null, "Seleccione una carpeta para guardar los graficos");
-                }
+                    VentanPrincipal.addPanelDerecho(panelGrafico);
+            
+                    
 
             } else if (botones.getText().equals("Compilar")) {
                 conexion.ejecutar(Panel1Escritura.getText());
@@ -62,22 +58,13 @@ public class AccionBoton implements ActionListener {
             } else if (botones.getText().equals("Acerca")) {
                 System.out.println(" acerda de");
 
-            } else if (botones.getText().equals("Tabla")) {
+            } else if (botones.getText().equals("Reportes")) {
                 System.out.println(" mostra tabla ");
-
-                /* 
-                // conectar con tabla
-
-                if (listaTokens!= null) {
-                    PanelReporte panelReporte =  new PanelReporte( listaTokens);
+                
+                    PanelReporte panelReporte =  new PanelReporte( );
                     VentanPrincipal.addPanelDerecho(panelReporte);
-                }else {
-                    Message.mostrarMensajeError(" Error no tiene Tokens", "ERROR!!");
-                    
-                }*/
-            }else if(botones.getText().equals("Sintactico")){
-                System.out.println("conectar con el sintactico");
-               // new ConectarSintactico().enviarAModel(listaTokens);
+               
+
             }
             
         }

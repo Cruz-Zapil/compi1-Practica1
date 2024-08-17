@@ -94,7 +94,7 @@ public class VentanPrincipal extends JFrame {
         panelIzquierdo.revalidate();
     }
 
-    public static void addPanelDerecho(PanelReporte panelReporte) {
+    public static void addPanelDerecho(JPanel panelReporte) {
         panelDerecho.removeAll();
         panelDerecho.add(panelReporte);
         panelDerecho.repaint();

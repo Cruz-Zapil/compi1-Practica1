@@ -1,34 +1,24 @@
 package com.cunoc.practica1.frontEnd.paneles.panelGrafico;
 
+
+
+import javax.swing.JPanel;
 import java.awt.Color;
-import java.awt.Component;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JList;
-import com.cunoc.practica1.frontEnd.compnents.ConstructorPanel;
-import com.cunoc.practica1.frontEnd.compnents.Item;
+import java.awt.Graphics;
 
-public class PanelGrafico extends ConstructorPanel {
 
-    //// paneles de imagenes
-    private AuxiGrafico panel2Auxi;
 
-    public PanelGrafico() {
-        super(new Color(245, 245, 220));
-        panel2Auxi = new AuxiGrafico();
-        this.add(panel2Auxi);
+public class PanelGrafico extends JPanel{
 
-    }
-}
-
-class ItemListRenderer extends DefaultListCellRenderer {
+   
     @Override
-    public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
-            boolean cellHasFocus) {
-        if (value instanceof Item) {
-            Item item = (Item) value;
-            value = item.getLabel();
-        }
-        return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+    protected void paintComponent(Graphics g) {
+
+        super.paintComponent(g);
+        
+        g.setColor(Color.red);
+        g.fillRect(10, 10, 100, 100);
     }
 
 }
