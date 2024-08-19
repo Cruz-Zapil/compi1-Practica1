@@ -13,8 +13,8 @@ public interface sym {
   public static final int LINEA = 6;
   public static final int PLUS = 13;
   public static final int RPAREN = 12;
-  public static final int LILA = 25;
   public static final int CURVA = 28;
+  public static final int BLANCO = 23;
   public static final int ANIMAR = 9;
   public static final int CUADRADO = 4;
   public static final int VERDE = 21;
@@ -26,7 +26,6 @@ public interface sym {
   public static final int NOMBRE = 8;
   public static final int EOF = 0;
   public static final int DIVIDE = 16;
-  public static final int MORADO = 22;
   public static final int CELESTE = 24;
   public static final int OBJETO_ANTERIOR = 27;
   public static final int NEWLINE = 17;
@@ -35,8 +34,9 @@ public interface sym {
   public static final int error = 1;
   public static final int POLIGONO = 7;
   public static final int CIRCULO = 3;
+  public static final int ROSA = 22;
   public static final int AZUL = 18;
-  public static final int NEGRO = 23;
+  public static final int NARANJA = 25;
   public static final int RECTANGULO = 5;
   public static final String[] terminalNames = new String[] {
   "EOF",
@@ -61,10 +61,10 @@ public interface sym {
   "ROJO",
   "AMARILLO",
   "VERDE",
-  "MORADO",
-  "NEGRO",
+  "ROSA",
+  "BLANCO",
   "CELESTE",
-  "LILA",
+  "NARANJA",
   "GRIS",
   "OBJETO_ANTERIOR",
   "CURVA",

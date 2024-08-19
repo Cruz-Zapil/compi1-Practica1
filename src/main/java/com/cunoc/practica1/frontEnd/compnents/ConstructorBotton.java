@@ -17,14 +17,14 @@ public class ConstructorBotton extends javax.swing.JButton {
         Border border = BorderFactory.createLineBorder(colorBorder);
         Border margin = new EmptyBorder(15, 30, 15, 30);
 
-        Font fuentePersonalizada = new Font("Arial", Font.PLAIN, 10); 
+        Font fuentePersonalizada = new Font("Arial", Font.PLAIN, 20); 
         
         this.setBorder(new CompoundBorder(border, margin));
         this.setBackground(backgroud);
         this.setForeground(font);
         this.setFont(fuentePersonalizada);
         
-        this.setBounds(x, y, 100,40);
+        this.setBounds(x, y, 150,50);
         this.setVisible(true);
         this.addActionListener(accionBoton);
     }

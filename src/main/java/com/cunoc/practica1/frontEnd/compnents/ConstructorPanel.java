@@ -12,7 +12,7 @@ public class ConstructorPanel extends JPanel {
 
         public ConstructorPanel(Color colorFondo/* , String etiqueta */) {
         this.setLayout(null);
-        this.setBounds(0, 0, 600, 660);
+        this.setBounds(0, 0, 750, 660);
         this.setBackground(colorFondo);
         
         titulo = new JLabel();

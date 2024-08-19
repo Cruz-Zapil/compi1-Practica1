@@ -1,9 +1,6 @@
 package com.cunoc.practica1.frontEnd.paneles.panelEscritura;
 
 import javax.swing.*;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import java.awt.*;
@@ -19,8 +16,10 @@ public class Panel1Escritura extends JPanel {
 
         this.setLayout(new BorderLayout());
 
+        Font fuentePersonalizada = new Font("Arial", Font.PLAIN, 16); 
         // Crear dos JTextAreas
         textAreaImput = new JTextPane();
+        textAreaImput.setFont(fuentePersonalizada);
 
         // Crear un JScrollPane
         JScrollPane scrollPane = new JScrollPane();
@@ -32,7 +31,7 @@ public class Panel1Escritura extends JPanel {
 
         // Agregar el JScrollPane al panel
         this.add(scrollPane);
-        this.setBounds(50, 30, 500, 550);
+        this.setBounds(30, 15, 700, 600);
         this.setVisible(true);
 
     }
@@ -58,18 +57,6 @@ public class Panel1Escritura extends JPanel {
         return textAreaImput.getText();
     }
 
-    public static void setTextColor(String text, Color color) {
-        StyledDocument doc = textAreaImput.getStyledDocument();
-        Style style = doc.addStyle("coloredStyle", null);
-        StyleConstants.setForeground(style, color);
-
-        try {
-            doc.insertString(doc.getLength(), text, style);
-           // doc.insertString(doc.getLength(), null, null); // Add a new line after colored text
-        } catch (BadLocationException e) {
-            e.printStackTrace();
-        }
-    }
 
 }
 
@@ -79,6 +66,9 @@ class LineNumberTextPane extends JTextPane {
 
     public LineNumberTextPane(JTextPane textPane) {
         this.textPane = textPane;
+        
+        Font fuentePersonalizada = new Font("Arial", Font.PLAIN, 16); 
+        this.setFont(fuentePersonalizada);
         setEditable(false);
         setBackground(Color.lightGray);
         setPreferredSize(new Dimension(30, Integer.MAX_VALUE));

@@ -12,14 +12,13 @@ import com.cunoc.practica1.frontEnd.VentanPrincipal;
 import com.cunoc.practica1.frontEnd.compnents.ConstructorBotton;
 import com.cunoc.practica1.frontEnd.paneles.panelEscritura.Panel1;
 import com.cunoc.practica1.frontEnd.paneles.panelEscritura.Panel1Escritura;
-import com.cunoc.practica1.frontEnd.paneles.panelGrafico.PanelGrafico;
-import com.cunoc.practica1.frontEnd.paneles.panelReporte.PanelReporte;
+
 
 
 public class AccionBoton implements ActionListener {
 
     private Panel1 panel1 = new Panel1();
-    private PanelGrafico panelGrafico = new PanelGrafico();
+ 
     
     
     private Conexion conexion = new Conexion();
@@ -40,7 +39,7 @@ public class AccionBoton implements ActionListener {
             } else if (botones.getText().equals("Grafico")) {
                 System.out.println("Grafico ");
 
-                    VentanPrincipal.addPanelDerecho(panelGrafico);
+                  conexion.graficar();
             
                     
 
@@ -52,18 +51,17 @@ public class AccionBoton implements ActionListener {
             } else if (botones.getText().equals("Limpiar")) {
                 /// limpiar
                 Panel1Escritura.setText("");
-            } else if (botones.getText().equals("Ayuda")) {
+            } else if (botones.getText().equals("Animar")) {
                 /// ayuda
-                System.out.println(" help");
+                System.out.println(" Animar");
+                conexion.animacionSecuencial();
+
             } else if (botones.getText().equals("Acerca")) {
                 System.out.println(" acerda de");
 
             } else if (botones.getText().equals("Reportes")) {
                 System.out.println(" mostra tabla ");
-                
-                    PanelReporte panelReporte =  new PanelReporte( );
-                    VentanPrincipal.addPanelDerecho(panelReporte);
-               
+                conexion.reportes();
 
             }
             

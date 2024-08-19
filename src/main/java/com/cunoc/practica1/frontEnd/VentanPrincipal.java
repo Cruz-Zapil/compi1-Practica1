@@ -14,7 +14,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.cunoc.practica1.frontEnd.compnents.ConstructorPanel;
 import com.cunoc.practica1.frontEnd.paneles.PanelMenu;
-import com.cunoc.practica1.frontEnd.paneles.panelReporte.PanelReporte;
+
 
 public class VentanPrincipal extends JFrame {
 
@@ -39,17 +39,17 @@ public class VentanPrincipal extends JFrame {
 
         this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         this.setTitle("Analizador Léxico");
-        this.setSize(1200, 700);
+        this.setSize(1350, 750);
         this.setLayout(null);
         this.setResizable(false);
         this.setVisible(true);
 
         /// atributos de panel izquierdo
-        panelIzquierdo.setBounds(0, 40, 600, 660);
+        panelIzquierdo.setBounds(0, 50, 750, 700);
         panelIzquierdo.setLayout(null);
 
         /// atributos de panel derecho
-        panelDerecho.setBounds(600, 40, 600, 660);
+        panelDerecho.setBounds(750, 50, 700, 700);
       //  panelDerecho.setBorder(new CompoundBorder(border, margin));
         panelDerecho.setLayout(null);
 

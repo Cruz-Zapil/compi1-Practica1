@@ -11,12 +11,12 @@ import java.awt.Color;
     public class PanelMenu extends JPanel {
 
         private ConstructorBotton[] botones = new ConstructorBotton[7];
-        private String[] etiquetas = {"Archivo", "Limpiar", "Compilar", "Animacion", "Reportes", "Acerca", "Ayuda"};
+        private String[] etiquetas = {"Archivo", "Limpiar", "Compilar", "Animar", "Reportes", "Grafico", "Acerca"};
         private AccionBoton accionBoton = new AccionBoton();
     
         public PanelMenu( Color textColor) {
             this.setLayout(null);
-            this.setBounds(0, 0, 1200, 40);
+            this.setBounds(0, 0, 1350, 50);
             this.setBackground(new Color(210, 180, 140));
     
             setComponentes(textColor);
@@ -25,7 +25,7 @@ import java.awt.Color;
     
         public void setComponentes(Color textColor) {
             for (int i = 0; i < botones.length; i++) {
-                botones[i] = new ConstructorBotton(etiquetas[i], textColor, new Color(210, 180, 140), Color.BLACK, 0 + (i * 100), 0, accionBoton);
+                botones[i] = new ConstructorBotton(etiquetas[i], textColor, new Color(210, 180, 140), Color.BLACK, 0 + (i * 150), 0, accionBoton);
                 this.add(botones[i]);
             }
             revalidate();

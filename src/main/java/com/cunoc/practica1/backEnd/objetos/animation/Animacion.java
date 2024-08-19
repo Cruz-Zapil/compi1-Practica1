@@ -3,11 +3,11 @@ package com.cunoc.practica1.backEnd.objetos.animation;
 public class Animacion {
 
     private String tipoAnimacion;
-    private Double destinoX;
-    private Double destinoY;
-    private Double orden;
+    private double destinoX;
+    private double destinoY;
+    private double orden;
 
-    public Animacion(String tipoAnimacion, Double dx, Double dy, Double or) {
+    public Animacion(String tipoAnimacion, double dx, double dy, double or) {
         this.tipoAnimacion = tipoAnimacion;
         this.destinoX = dx;
         this.destinoY = dy;
@@ -22,7 +22,7 @@ public class Animacion {
         this.tipoAnimacion = tipoAnimacion;
     }
 
-    public Double getDestinoX() {
+    public double getDestinoX() {
         return destinoX;
     }
 
@@ -30,7 +30,7 @@ public class Animacion {
         this.destinoX = destinoX;
     }
 
-    public Double getDestinoY() {
+    public double getDestinoY() {
         return destinoY;
     }
 
@@ -38,7 +38,7 @@ public class Animacion {
         this.destinoY = destinoY;
     }
 
-    public Double getOrden() {
+    public double getOrden() {
         return orden;
     }
 
