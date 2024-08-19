@@ -41,12 +41,8 @@ public class AccionBoton implements ActionListener {
 
                   conexion.graficar();
             
-                    
-
             } else if (botones.getText().equals("Compilar")) {
                 conexion.ejecutar(Panel1Escritura.getText());
-                
-                Message.mostrarMensajeInfo("Texto Leido... Puede ver en Tabla", "Info.");
 
             } else if (botones.getText().equals("Limpiar")) {
                 /// limpiar
@@ -56,8 +52,8 @@ public class AccionBoton implements ActionListener {
                 System.out.println(" Animar");
                 conexion.animacionSecuencial();
 
-            } else if (botones.getText().equals("Acerca")) {
-                System.out.println(" acerda de");
+            } else if (botones.getText().equals("Exportar")) {
+                conexion.exportar();
 
             } else if (botones.getText().equals("Reportes")) {
                 System.out.println(" mostra tabla ");

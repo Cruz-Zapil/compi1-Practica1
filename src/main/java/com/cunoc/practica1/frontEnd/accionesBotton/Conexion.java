@@ -76,19 +76,25 @@ public class Conexion {
         VentanPrincipal.addPanelDerecho(panelGrafico);
     }
 
+    /// exportar imgen
+    public void exportar(){
+        panelGrafico.guardarPanel();
+    }
+
+    
     public void ordenar() {
 
         int n = listaGraficaEnviado.size();
         for (int i = 1; i < n; i++) {
             Grafica auxi = listaGraficaEnviado.get(i);
             int j = i - 1;
-
+    
             // mover los elementos
             while (j >= 0) {
-
+    
                 Animacion animacionActual = listaGraficaEnviado.get(j).getAnimacion();
                 Animacion animacionAuxi = auxi.getAnimacion();
-
+    
                 if (animacionActual == null && animacionAuxi == null) {
                     break;
                 } else if (animacionActual == null) {
@@ -97,19 +103,20 @@ public class Conexion {
                     listaGraficaEnviado.set(j + 1, listaGraficaEnviado.get(j));
                     j--;
                 } else {
-                    if (animacionActual.getOrden() > animacionAuxi.getOrden()) {
+                    // Cambia la comparación para ordenar de mayor a menor
+                    if (animacionActual.getOrden() < animacionAuxi.getOrden()) {
                         listaGraficaEnviado.set(j + 1, listaGraficaEnviado.get(j));
                         j--;
                     } else {
                         break;
                     }
                 }
-
+    
             }
             listaGraficaEnviado.set(j + 1, auxi);
         }
     }
-
+    
     // Método para animar las figuras en secuencia
     public void animacionSecuencial() {
         ordenar(); // Ordenar la lista de gráficos según el orden de animación
