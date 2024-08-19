@@ -5,7 +5,8 @@
 package com.cunoc.practica1.backEnd.AFND;
 
 import java_cup.runtime.Symbol;
-
+import com.cunoc.practica1.backEnd.report.Errores;
+import com.cunoc.practica1.frontEnd.paneles.panelReporte.PanelReporte;
 
 
 @SuppressWarnings("fallthrough")
@@ -383,6 +384,7 @@ public class Lexer implements java_cup.runtime.Scanner {
   /* user code: */
 
     StringBuffer string = new StringBuffer();
+    int longitudToken=0;
 
     private Symbol symbol(int type) {
         return new Symbol(type, yyline, yycolumn);
@@ -401,7 +403,8 @@ public class Lexer implements java_cup.runtime.Scanner {
    */
   public Lexer(java.io.Reader in) {
       yyline = 1; 
-    yychar = 1; 
+    yychar = 0; 
+    
     this.zzReader = in;
   }
 
@@ -763,8 +766,10 @@ public class Lexer implements java_cup.runtime.Scanner {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { // Agregar el error léxico a la lista
-    Conexion.listaErrores.add(new Errores("Léxico", yytext() ,"Caracter inválido: " + yytext(), yyline, (int)yychar));
+            { yychar+=1;
+    // Agregar el error léxico a la lista
+
+    PanelReporte.agregarError(new Errores("Léxico", yytext() ,"Caracter inválido: " + yytext(), yyline, (int)yychar));
             }
           // fall through
           case 31: break;
@@ -814,12 +819,15 @@ public class Lexer implements java_cup.runtime.Scanner {
           // fall through
           case 40: break;
           case 11:
-            { return new Symbol(sym.NUMERO,  Double.valueOf(yytext()));
+            { longitudToken = yytext().length();
+    yychar+=longitudToken; return new Symbol(sym.NUMERO, yyline, (int)yychar, Double.valueOf(yytext()));
             }
           // fall through
           case 41: break;
           case 12:
-            { return new Symbol(sym.NOMBRE,yyline, (int)yychar, yytext());
+            { longitudToken = yytext().length();
+    yychar+=longitudToken;
+    return new Symbol(sym.NOMBRE, yyline, (int)yychar , yytext());
             }
           // fall through
           case 42: break;

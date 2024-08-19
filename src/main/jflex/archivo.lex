@@ -1,7 +1,8 @@
 package com.cunoc.practica1.backEnd.AFND;
 
 import java_cup.runtime.Symbol;
-
+import com.cunoc.practica1.backEnd.report.Errores;
+import com.cunoc.practica1.frontEnd.paneles.panelReporte.PanelReporte;
 
 %%
 %public
@@ -26,13 +27,15 @@ CURVA="curva"
 
 %init{ 
     yyline = 1; 
-    yychar = 1; 
+    yychar = 0; 
+    
 %init} 
  
 
 %{
 
     StringBuffer string = new StringBuffer();
+    int longitudToken=0;
 
     private Symbol symbol(int type) {
         return new Symbol(type, yyline, yycolumn);
@@ -44,11 +47,10 @@ CURVA="curva"
 
 %}
 
-
-
 %%
 
-{digit}+("."{digit}+)? { return new Symbol(sym.NUMERO,  Double.valueOf(yytext())); }
+{digit}+("."{digit}+)? {   longitudToken = yytext().length();
+    yychar+=longitudToken; return new Symbol(sym.NUMERO, yyline, (int)yychar, Double.valueOf(yytext())); }
 
 "graficar" {yychar+=8; return new Symbol(sym.GRAFICAR, yyline, (int)yychar, yytext()); }
 "circulo" { yychar+=7;return new Symbol(sym.CIRCULO, yyline, (int)yychar, yytext()); }
@@ -79,12 +81,11 @@ CURVA="curva"
 {CURVA} {yychar+= 5;return new Symbol(sym.CURVA, yyline, (int)yychar, yytext());}
 " " {yychar+=1; /* ignore */}
 
-[a-zA-Z_][a-zA-Z0-9_]* {  return new Symbol(sym.NOMBRE,yyline, (int)yychar, yytext()); }
 
 [a-zA-Z_][a-zA-Z0-9_]* {  
-    int longitudToken = yytext().length();
+    longitudToken = yytext().length();
     yychar+=longitudToken;
-    return new Symbol(sym.NOMBRE, yyline, (int)yychar - longitudToken + 1, yytext()); 
+    return new Symbol(sym.NOMBRE, yyline, (int)yychar , yytext()); 
 }
 
 
@@ -93,6 +94,8 @@ CURVA="curva"
 
 // Código en tu lexer
 [^] { 
+    yychar+=1;
     // Agregar el error léxico a la lista
-    Conexion.listaErrores.add(new Errores("Léxico", yytext() ,"Caracter inválido: " + yytext(), yyline, (int)yychar));
+
+    PanelReporte.agregarError(new Errores("Léxico", yytext() ,"Caracter inválido: " + yytext(), yyline, (int)yychar));
 }

@@ -7,6 +7,7 @@ import com.cunoc.practica1.backEnd.objetos.animation.Animacion;
 
 import com.cunoc.practica1.backEnd.report.Operadores;
 import com.cunoc.practica1.frontEnd.VentanPrincipal;
+import com.cunoc.practica1.frontEnd.accionesBotton.utils.Message;
 import com.cunoc.practica1.frontEnd.paneles.panelGrafico.PanelGrafico;
 import com.cunoc.practica1.frontEnd.paneles.panelReporte.PanelReporte;
 
@@ -48,20 +49,23 @@ public class Conexion {
 
                 Lexer lexer = new Lexer(extraerTexto);
 
-                parser parser = new parser(lexer);
-                parser.parse(); // Ejecutar el parser
+                parser cupParser = new parser(lexer);
+                cupParser.parse(); // Ejecutar el parser
 
-                listaGraficaEnviado = parser.getListaGrafica();
+                listaGraficaEnviado = cupParser.getListaGrafica();
 
-                reporteColor = parser.getReporteColor();
-                reporteFigura = parser.getReporteFigura();
-                reporteAnimacion = parser.gerReporteAnimacion();
-                reporteOperadores= parser.getReporteOperacion();
+                reporteColor = cupParser.getReporteColor();
+                reporteFigura = cupParser.getReporteFigura();
+                reporteAnimacion = cupParser.gerReporteAnimacion();
+                reporteOperadores= cupParser.getReporteOperacion();
 
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+                System.out.println(" Error al conectar con lexer, prube reiniciando");
             }
 
+        }else {
+            Message.mostrarMensajeError("No hay ningun texto ", "ERROR");
         }
     }
 
@@ -158,6 +162,8 @@ public class Conexion {
                 indiceAnimacionActual++;
                 animacionSecuencial();
             }
+        }else {
+            Message.mostrarMensajeInfo("No hay ninguna animacion", "Error");
         }
     }
 

@@ -49,7 +49,7 @@ public class AccionBoton implements ActionListener {
                 Panel1Escritura.setText("");
             } else if (botones.getText().equals("Animar")) {
                 /// ayuda
-                System.out.println(" Animar");
+                
                 conexion.animacionSecuencial();
 
             } else if (botones.getText().equals("Exportar")) {
