@@ -266,7 +266,12 @@ term ::= term:t TIMES factor:f
        :}
        | factor:f
        {:
-
+                // Obtener la línea y columna del primer símbolo (n)
+                int linea =  fleft;
+                int columna =  fright;
+                // Reporte de número
+                reporteOperaciones.add(new Operadores("Factor",linea,columna,(String)f.value));
+       
        
         RESULT = f; :};
 
@@ -274,5 +279,10 @@ factor ::= LPAREN expre:e RPAREN
          {: RESULT = e; :}
          | NUMERO:n
          {:
+                // Obtener la línea y columna del primer símbolo (n)
+                int linea = nleft;
+                int columna =  nright;
+                // Reporte de número
+                reporteOperaciones.add(new Operadores("Número",linea,columna,(Sting)n.value));
                 RESULT = n;
-         :}
+         :};

@@ -876,9 +876,9 @@ class CUP$parser$actions {
           case 30: // factor ::= NUMERO 
             {
               Double RESULT =null;
-		int nleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
-		int nright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
-		Double n = (Double)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int nleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int nright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Double n = (Double)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                 // Obtener la línea y columna del primer símbolo (n)
                 int linea = nleft;
@@ -886,7 +886,7 @@ class CUP$parser$actions {
                 // Reporte de número
                 reporteOperaciones.add(new Operadores("Número",linea,columna,(Sting)n.value));
                 RESULT = n;
-          RESULT = n; 
+         
               CUP$parser$result = parser.getSymbolFactory().newSymbol("factor",4, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

@@ -4,7 +4,7 @@ import com.cunoc.practica1.backEnd.AFND.Lexer;
 import com.cunoc.practica1.backEnd.AFND.parser;
 import com.cunoc.practica1.backEnd.objetos.Grafica;
 import com.cunoc.practica1.backEnd.objetos.animation.Animacion;
-import com.cunoc.practica1.backEnd.report.Errores;
+
 import com.cunoc.practica1.backEnd.report.Operadores;
 import com.cunoc.practica1.frontEnd.VentanPrincipal;
 import com.cunoc.practica1.frontEnd.paneles.panelGrafico.PanelGrafico;

@@ -5,7 +5,6 @@
 package com.cunoc.practica1.backEnd.AFND;
 
 import com.cunoc.practica1.backEnd.report.Errores;
-import com.cunoc.practica1.frontEnd.accionesBotton.Conexion;
 import com.cunoc.practica1.frontEnd.paneles.panelReporte.PanelReporte;
 
 import java_cup.runtime.Symbol;
@@ -768,12 +767,12 @@ public class Lexer implements java_cup.runtime.Scanner {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
             { // Agregar el error léxico a la lista
-            PanelReporte.agregarError(new Errores("Léxico", yytext() ,"Caracter inválido: " + yytext(), yyline, (int)yychar));
+    PanelReporte.agregarError(new Errores("Léxico", yytext() ,"Caracter inválido: " + yytext(), yyline, (int)yychar));
             }
           // fall through
           case 31: break;
           case 2:
-            { yyline++; return new Symbol(sym.NEWLINE, yyline, (int)yychar, yytext());
+            { yychar=1;yyline++; return new Symbol(sym.NEWLINE, yyline, (int)yychar, yytext());
             }
           // fall through
           case 32: break;
