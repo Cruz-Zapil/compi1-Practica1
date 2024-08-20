@@ -136,8 +136,8 @@ start with instrucciones;
 ///  Definir la gramatica: 
 
 
-instrucciones ::= instruccion: i   instrucciones: is 
-                | instruccion: i 
+instrucciones ::= instruccion  instrucciones
+                | instruccion
                 | error instrucciones;
 
 
@@ -248,6 +248,7 @@ expre ::= expre:e1 PLUS term:e2
             | term:e
             {: RESULT =  e ; :};
 
+
 term ::= term:t TIMES factor:f
        {: 
             // Obtener la línea y columna del primer símbolo (e1)
@@ -270,14 +271,17 @@ term ::= term:t TIMES factor:f
            RESULT = t / f ; 
        :}
        | factor:f
-       {: RESULT = f; :};
+       {:
+         
+        RESULT = f; :};
 
 factor ::= LPAREN expre:e RPAREN
          {:
-          factor ="( " + e +" )";
+         factor= "( "+ e +" )";
           RESULT = e; :}
          | NUMERO:n
          {:
-                factor = String.valueOf( n);
+                // Obtener la línea y columna del primer símbolo (n)
+                factor = String.valueOf(n);
                 RESULT = n;
          :};

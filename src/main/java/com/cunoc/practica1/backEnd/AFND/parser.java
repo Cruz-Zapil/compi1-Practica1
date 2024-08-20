@@ -372,12 +372,6 @@ class CUP$parser$actions {
           case 1: // instrucciones ::= instruccion instrucciones 
             {
               Object RESULT =null;
-		int ileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
-		int iright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
-		Object i = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		int isleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int isright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		Object is = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("instrucciones",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -387,9 +381,6 @@ class CUP$parser$actions {
           case 2: // instrucciones ::= instruccion 
             {
               Object RESULT =null;
-		int ileft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int iright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		Object i = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("instrucciones",0, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -833,7 +824,9 @@ class CUP$parser$actions {
 		int fleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int fright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Double f = (Double)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = f; 
+		
+         
+        RESULT = f; 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("term",3, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -846,8 +839,7 @@ class CUP$parser$actions {
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Double e = (Double)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		
-         
-          factor ="( " + e +" )";
+         factor= "( "+ e +" )";
           RESULT = e; 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("factor",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -861,7 +853,8 @@ class CUP$parser$actions {
 		int nright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Double n = (Double)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
-                factor = String.valueOf( n);
+                // Obtener la línea y columna del primer símbolo (n)
+                factor = String.valueOf(n);
                 RESULT = n;
          
               CUP$parser$result = parser.getSymbolFactory().newSymbol("factor",4, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
