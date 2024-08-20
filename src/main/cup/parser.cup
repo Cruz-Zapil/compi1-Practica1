@@ -1,0 +1,301 @@
+package com.cunoc.practica1.backEnd.AFND;
+
+import com.cunoc.practica1.backEnd.objetos.Grafica;
+import com.cunoc.practica1.backEnd.objetos.Linea;
+import com.cunoc.practica1.backEnd.objetos.Poligono;
+import com.cunoc.practica1.backEnd.objetos.Rectangulo;
+import com.cunoc.practica1.backEnd.objetos.animation.Animacion;
+import com.cunoc.practica1.backEnd.objetos.Circulo;
+import com.cunoc.practica1.backEnd.objetos.Cuadrado;
+import com.cunoc.practica1.backEnd.report.Errores;
+import com.cunoc.practica1.backEnd.report.Operadores;
+import com.cunoc.practica1.frontEnd.paneles.panelReporte.PanelReporte;
+
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+
+import java_cup.runtime.*;
+
+
+// Definir el HashMap para almacenar las gráficas
+parser code {:
+
+ /**
+     * Método al que se llama automáticamente ante algún error sintactico.
+     **/ 
+    public void syntax_error(Symbol s){ 
+        System.out.println("Error Sintáctico en la Línea " + (s.left) +
+        " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
+
+        PanelReporte.agregarError(new Errores("Sintactico",String.valueOf(s.value),"no se esperaba: "+String.valueOf( s.value), s.left, s.right));
+    } 
+    /**
+     * Método al que se llama cuando se identifica un error sintáctico en el que 
+     * ya no es posible una recuperación de errores.
+     **/ 
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        System.out.println("Error síntactico irrecuperable en la Línea " + 
+        (s.left)+ " Columna "+s.right+". Componente " + s.value + " no reconocido."); 
+    } 
+
+    // grafica auxi almacenar la instruccion anteriro 
+    private Grafica graficaAux;
+
+    // Lista de gráficas
+    private List<Grafica> listaGrafica = new ArrayList<>();
+
+    // Método para obtener el HashMap de gráficos
+    public List<Grafica> getListaGrafica() {
+        return listaGrafica;
+    }
+
+
+    // reporte de operaciones matemáticas
+    private List<Operadores> reporteOperaciones = new ArrayList<>();
+    
+    // retornar el reporte Operaciones Matematicas 
+    public List<Operadores> getReporteOperacion(){
+        return reporteOperaciones;
+    }
+
+   
+
+    // reporte de número de color
+    private HashMap<String, Integer> reporteColor = new HashMap<>();
+
+    // Inicializar los contadores en 0 para cada color que deseas rastrear
+    {
+        reporteColor.put("AZUL", 0);
+        reporteColor.put("ROJO", 0);
+        reporteColor.put("AMARILLO", 0);
+        reporteColor.put("VERDE", 0);
+        reporteColor.put("ROSA", 0);
+        reporteColor.put("NEGRO", 0);
+        reporteColor.put("CELESTE", 0);
+        reporteColor.put("NARANJA", 0);
+        reporteColor.put("GRIS", 0);
+    }
+    // retornar el reporte Color 
+    public HashMap<String, Integer> getReporteColor(){
+        return reporteColor;
+    }
+
+    // reporte de número de figura
+    private HashMap<String, Integer> reporteFigura = new HashMap<>();
+    {
+        reporteFigura.put("CIRCULO", 0);
+        reporteFigura.put("CUADRADO", 0);
+        reporteFigura.put("RECTANGULO", 0);
+        reporteFigura.put("LINEA", 0);
+        reporteFigura.put("POLIGONO", 0);
+    }
+    // retonar el reporte Figura 
+    public HashMap<String, Integer> getReporteFigura(){
+        return reporteFigura;
+    }
+
+    // reporte de animaciones
+    private HashMap<String, Integer> reporteAnimacion = new HashMap<>();
+
+    {
+        reporteAnimacion.put("LINEA",0);
+        reporteAnimacion.put("CURVA",0);
+    }
+
+    public HashMap<String, Integer> gerReporteAnimacion(){
+        return reporteAnimacion;
+    }
+    private String factor ="";
+    private boolean factorF = false;
+
+
+public void terminarAnalisis() {
+    // Verificar si graficaAux no es null y agregarla a listaGrafica
+    if (graficaAux != null) {
+        listaGrafica.add(graficaAux);
+        graficaAux = null;
+    }
+}
+
+:}
+
+
+// Definir terminales
+terminal String GRAFICAR, CIRCULO, CUADRADO, RECTANGULO, LINEA, POLIGONO, NOMBRE, ANIMAR;
+terminal String COMA, LPAREN, RPAREN, PLUS, MINUS, TIMES, DIVIDE;
+
+terminal String AZUL, ROJO, AMARILLO, VERDE, ROSA, BLANCO, CELESTE, NARANJA, GRIS;
+
+terminal String OBJETO_ANTERIOR, CURVA;
+terminal Double NUMERO;
+
+/// definir no terminales: 
+non terminal  instrucciones, instruccion;
+non terminal Double expre, term, factor;
+non terminal Color color;
+non terminal String tipo_animacion;
+
+
+start with instrucciones; 
+
+///  Definir la gramatica: 
+
+
+instrucciones ::= instruccion  instrucciones
+                | instruccion 
+                {:
+                    if(graficaAux!=null){
+                        listaGrafica.add(graficaAux);
+                        graficaAux = null;
+                    }
+                :}
+                | error instrucciones
+                {:
+                    if(graficaAux!=null){
+                        listaGrafica.add(graficaAux);
+                        graficaAux = null;
+                    }
+                :};
+
+
+instruccion ::= GRAFICAR CIRCULO LPAREN NOMBRE:n COMA expre:posx COMA expre:posy COMA  expre:r COMA color:c RPAREN 
+                {:  reporteFigura.put("CIRCULO", reporteFigura.get("CIRCULO") +1); 
+                    System.out.println(" graficar circulo ( "+ n +", "+ posx +" , "+ posy +" , "+ r + " , "+ c+ " )");
+
+                        if (graficaAux !=null){
+                            listaGrafica.add(graficaAux);  
+                        }
+                        graficaAux = new Circulo(n,null,posx,posy,c,r);
+
+                :}
+                | GRAFICAR CUADRADO LPAREN NOMBRE:n COMA expre:posx COMA expre:posy COMA expre:l COMA color:c RPAREN 
+                {:  reporteFigura.put("CUADRADO", reporteFigura.get("CUADRADO") +1);
+                    System.out.println(" graficar cuadrado ( "+ n +", "+ posx +" , "+ posy +" , "+ l + " , "+ c+ " )");
+
+                        if (graficaAux !=null){
+                            listaGrafica.add(graficaAux);
+                         }
+
+                        graficaAux = new Cuadrado(n,null,posx,posy,c,l);
+
+                  :}
+                | GRAFICAR RECTANGULO LPAREN NOMBRE:n COMA expre:posx COMA expre:posy COMA expre:a COMA expre:al COMA color:c  RPAREN 
+                {: reporteFigura.put("RECTANGULO", reporteFigura.get("RECTANGULO") +1);
+                   System.out.println(" graficar rectangulo ( "+ n +", "+ posx +" , "+ posy +" , "+ a+" , "+ al + " , "+ c+" )"); 
+                
+                        if (graficaAux !=null){
+                            listaGrafica.add(graficaAux);
+                         }
+                        graficaAux = new Rectangulo(n,null,posx,posy,c,a,al);
+
+                 :}
+                | GRAFICAR LINEA LPAREN NOMBRE:n COMA expre:posx COMA expre:posy COMA expre:posx2 COMA expre:posy2 COMA color:c RPAREN 
+                {: reporteFigura.put("LINEA", reporteFigura.get("LINEA") +1);
+                   System.out.println(" graficar linea ( "+ n +", "+ posx +" , "+ posy +" , "+" , "+ posx2+" , "+ posy2+ " , "+ c+ " )");
+                        if (graficaAux !=null){
+                            listaGrafica.add(graficaAux);
+                         }
+
+                        graficaAux = new Linea(n,null,posx,posy,c,posx2,posy2);
+                 :}
+                | GRAFICAR POLIGONO LPAREN NOMBRE:n COMA expre:posx COMA expre:posy COMA expre:cl COMA expre:l COMA expre:h COMA color:c  RPAREN 
+                {:  reporteFigura.put("POLIGONO", reporteFigura.get("POLIGONO") +1); 
+                    System.out.println(" graficar poligono ( "+ n +", "+ posx +" , "+ posy +" , "+ cl + " , "+ l+" , "+h+" , "+ c +" )");
+                      if (graficaAux !=null){
+                            listaGrafica.add(graficaAux);
+                         }
+                        graficaAux = new Poligono(n,null,posx,posy,c,cl,l,h);
+                 :}
+                 | ANIMAR OBJETO_ANTERIOR LPAREN tipo_animacion:ta COMA expre:dx COMA expre:dy COMA expre:or RPAREN 
+                 {:
+
+                 Animacion nuevaAnimacion = new Animacion(ta,dx,dy,or);
+                    if(graficaAux!=null){
+                        graficaAux.setAnimacion(nuevaAnimacion);
+                        listaGrafica.add(graficaAux);
+                        graficaAux= null;  
+                        reporteAnimacion.put(ta,reporteAnimacion.get(ta)+1);                      
+                    }else {
+                        System.out.println(" no hay grafica anterior :C");
+                    };
+                
+                 :};
+
+color ::= AZUL {: reporteColor.put("AZUL", reporteColor.get("AZUL") + 1);  RESULT = Color.BLUE; :}
+        | ROJO {: reporteColor.put("ROJO", reporteColor.get("ROJO") + 1); RESULT = Color.RED; :}
+        | AMARILLO {: reporteColor.put("AMARILLO", reporteColor.get("AMARILLO") + 1); RESULT = Color.YELLOW; :}
+        | VERDE {: reporteColor.put("VERDE", reporteColor.get("VERDE") + 1); RESULT =Color.GREEN;:}
+        | ROSA {: reporteColor.put("ROSA", reporteColor.get("ROSA") + 1); RESULT = Color.PINK; :}
+        | BLANCO {: reporteColor.put("BLANCO", reporteColor.get("NEGRO") + 1); RESULT = Color.WHITE; :}
+        | CELESTE {: reporteColor.put("CELESTE", reporteColor.get("CELESTE") + 1); RESULT = Color.CYAN; :}
+        | NARANJA {: reporteColor.put("NARANJA", reporteColor.get("NARANJA") + 1); RESULT = Color.ORANGE;  :}
+        | GRIS {: reporteColor.put("GRIS", reporteColor.get("GRIS") + 1); RESULT = Color.GRAY;  :};
+
+tipo_animacion::= CURVA {:RESULT="CURVA";:}
+                | LINEA {:RESULT="LINEA";:};
+
+// Operaciones matemáticas
+
+expre ::= expre:e1 PLUS term:e2
+            {: 
+                // Obtener la línea y columna del primer símbolo (e1)
+                int linea = e1left;
+                int columna = e1right;
+               // Reporte de suma
+               String operacion = e1 + " + " + e2;
+               
+               reporteOperaciones.add(new Operadores("Suma",linea,columna,operacion));
+               RESULT = e1 + e2 ; 
+            :}
+            | expre:e1 MINUS term:e2
+            {: 
+                // Obtener la línea y columna del primer símbolo (e1)
+                int linea =  e1left;
+                int columna =  e1right;
+               // Reporte de resta
+               String operacion = e1 + " - " + e2;
+               reporteOperaciones.add(new Operadores("Resta",linea,columna,operacion));
+               RESULT =e1 - e2 ; 
+            :}
+            | term:e
+            {: RESULT =  e ; :};
+
+
+term ::= term:t TIMES factor:f
+       {: 
+            // Obtener la línea y columna del primer símbolo (e1)
+            int linea = tleft;
+            int columna = tright;
+           // Reporte de multiplicación
+           String operacion = t + " * " + factor;
+           reporteOperaciones.add( new Operadores("Multiplicación",linea,columna,operacion));
+           RESULT =t * f ; 
+       :}
+       | term:t DIVIDE factor:f
+       {: 
+            // Obtener la línea y columna del primer símbolo (e1)
+            int linea = tleft;
+            int columna = tright;
+           // Reporte de división
+           String operacion = t + " / " + factor;
+
+           reporteOperaciones.add( new Operadores("División",linea,columna,operacion));
+           RESULT = t / f ; 
+       :}
+       | factor:f
+       {:
+         
+        RESULT = f; :};
+
+factor ::= LPAREN expre:e RPAREN
+         {:
+         factor= "( "+ e +" )";
+          RESULT = e; :}
+         | NUMERO:n
+         {:
+                // Obtener la línea y columna del primer símbolo (n)
+                factor = String.valueOf(n);
+                RESULT = n;
+         :};

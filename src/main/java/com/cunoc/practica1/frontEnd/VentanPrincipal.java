@@ -38,7 +38,7 @@ public class VentanPrincipal extends JFrame {
         panelDerecho = new JPanel();
 
         this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        this.setTitle("Analizador Léxico");
+        this.setTitle("Graficador de figuras geometricas");
         this.setSize(1350, 750);
         this.setLayout(null);
         this.setResizable(false);
