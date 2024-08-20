@@ -65,7 +65,7 @@
         </configuration>
       </plugin>
 
-      <!--   plugin de CUP   -->
+      <!--   plugin de CUP   
 
       <plugin>
         <groupId>com.github.vbmacher</groupId>
@@ -83,6 +83,8 @@
         </configuration>
       </plugin>
 
+    
+-->
 
       <!--   plugin de ANTLR   -->
       <plugin>

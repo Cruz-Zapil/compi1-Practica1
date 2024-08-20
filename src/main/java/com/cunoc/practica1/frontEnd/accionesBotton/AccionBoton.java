@@ -44,7 +44,7 @@ public class AccionBoton implements ActionListener {
             } else if (botones.getText().equals("Compilar")) {
             
                 conexion.ejecutar(Panel1Escritura.getText());
-                    Message.mostrarConfirmacion("Archivo leido", "Compilado");
+                    Message.mostrarMensajeInfo("Compilado", "Compilado");
 
             } else if (botones.getText().equals("Limpiar")) {
 
