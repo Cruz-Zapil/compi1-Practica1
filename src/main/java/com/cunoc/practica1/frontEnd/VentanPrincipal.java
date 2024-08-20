@@ -101,4 +101,7 @@ public class VentanPrincipal extends JFrame {
         panelDerecho.revalidate();
 
     }
+
+
+
 }

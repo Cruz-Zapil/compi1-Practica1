@@ -10,11 +10,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import com.cunoc.practica1.backEnd.objetos.Grafica;
 import com.cunoc.practica1.frontEnd.accionesBotton.utils.LogicaArchivos;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public class PanelGrafico extends JPanel {
 
@@ -46,44 +49,57 @@ public class PanelGrafico extends JPanel {
     }
 
 
+public void guardarPanel() {
+    System.out.println("Se va a exportar el panel");
 
+    String ruta = new LogicaArchivos().obtenerRutaCarpeta();
 
+    int ancho = this.getWidth();
+    int alto = this.getHeight();
 
+    // Crear un BufferedImage con el tamaño del panel
+    BufferedImage imagen = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_ARGB);
 
+    // Obtener el Graphics2D del buffer de la imagen
+    Graphics2D g2d = imagen.createGraphics();
 
-    public void guardarPanel (){
-        System.out.println(" se va exportar el panel ");
+    // Renderizar el contenido del panel en el Graphics2D
+    this.paint(g2d);
 
-        String ruta  = new LogicaArchivos().obtenerRutaCarpeta();
+    // Liberar recursos del Graphics2D
+    g2d.dispose();
 
+    // Guardar la imagen PNG
+    try {
+        File archivoImagen = new File(ruta + "/imagen_panel.png");
+        ImageIO.write(imagen, "png", archivoImagen);
+        System.out.println("Imagen PNG guardada en: " + archivoImagen.getAbsolutePath());
 
-        int ancho = this.getWidth();
-        int alto = this.getHeight();
-
-        /// crear un bufferedImage con el tamaño del panle
-    
-        BufferedImage imagen = new BufferedImage(alto, ancho,BufferedImage.TYPE_INT_ARGB );
-
-        // obtener el graphics del buffer
-
-        Graphics2D ged = imagen.createGraphics();
-
-        // obtener el contenido del panel
-        this.paint(ged);
-
-        ged.dispose();
-
-        // gurdar la imagen
-
-        try{
-            File archivoImagen = new File(ruta);
-            ImageIO.write(imagen, "png", archivoImagen);
-            System.out.println("Igen guardada en: " + ruta);
-            Desktop.getDesktop().open(archivoImagen);
-        }catch (IOException e) {
-            e.printStackTrace();
-
-        }
+        // Abrir la imagen PNG en el visor predeterminado del sistema
+        Desktop.getDesktop().open(archivoImagen);
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+
+    // Guardar la imagen en un archivo PDF
+    try {
+        Document document = new Document(new com.itextpdf.text.Rectangle(ancho, alto));
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(ruta + "/imagen_panel.pdf"));
+        document.open();
+
+        // Convertir BufferedImage a Image para PDF
+        com.itextpdf.text.Image pdfImage = com.itextpdf.text.Image.getInstance(writer, imagen, 1.0f);
+        document.add(pdfImage);
+
+        document.close();
+        System.out.println("PDF guardado en: " + ruta + "/imagen_panel.pdf");
+
+        // Abrir el archivo PDF en el visor predeterminado del sistema
+        File archivoPDF = new File(ruta + "/imagen_panel.pdf");
+        Desktop.getDesktop().open(archivoPDF);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
 
 }

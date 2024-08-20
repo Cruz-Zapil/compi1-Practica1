@@ -10,8 +10,8 @@ import java.awt.Color;
 
     public class PanelMenu extends JPanel {
 
-        private ConstructorBotton[] botones = new ConstructorBotton[7];
-        private String[] etiquetas = {"Archivo", "Limpiar", "Compilar", "Animar", "Grafico", "Reportes","Exportar"};
+        private ConstructorBotton[] botones = new ConstructorBotton[8];
+        private String[] etiquetas = {"Archivo", "Limpiar", "Compilar", "Animar", "Grafico", "Reportes","Exportar","Reiniciar"};
         private AccionBoton accionBoton = new AccionBoton();
     
         public PanelMenu( Color textColor) {

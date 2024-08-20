@@ -41,11 +41,15 @@ public class Panel1Escritura extends JPanel {
         sourceScrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
             @Override
             public void adjustmentValueChanged(AdjustmentEvent e) {
-               // int value = e.getValue();
-                targetTextArea1.scrollRectToVisible(new Rectangle(targetTextArea1.getSize()));
-
+                Rectangle visibleRect = targetTextArea1.getVisibleRect();
+                Rectangle desiredRect = new Rectangle(targetTextArea1.getSize());
+                
+                if (!visibleRect.equals(desiredRect)) {
+                    targetTextArea1.scrollRectToVisible(desiredRect);
+                }
             }
         });
+        
     }
 
     public static void setText(String text) {
@@ -71,7 +75,7 @@ class LineNumberTextPane extends JTextPane {
         this.setFont(fuentePersonalizada);
         setEditable(false);
         setBackground(Color.lightGray);
-        setPreferredSize(new Dimension(30, Integer.MAX_VALUE));
+        setPreferredSize(new Dimension(40, Integer.MAX_VALUE));
         updateLineNumbers();
 
         textPane.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {

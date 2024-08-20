@@ -111,6 +111,13 @@ parser code {:
     private boolean factorF = false;
 
 
+public void terminarAnalisis() {
+    // Verificar si graficaAux no es null y agregarla a listaGrafica
+    if (graficaAux != null) {
+        listaGrafica.add(graficaAux);
+        graficaAux = null;
+    }
+}
 
 :}
 
@@ -216,9 +223,9 @@ instruccion ::= GRAFICAR CIRCULO LPAREN NOMBRE:n COMA expre:posx COMA expre:posy
                 
                  :};
 
-color ::= AZUL:az {: reporteColor.put("AZUL", reporteColor.get("AZUL") + 1);  RESULT = Color.BLUE; :}
-        | ROJO:ro {: reporteColor.put("ROJO", reporteColor.get("ROJO") + 1); RESULT = Color.RED; :}
-        | AMARILLO:am {: reporteColor.put("AMARILLO", reporteColor.get("AMARILLO") + 1); RESULT = Color.YELLOW; :}
+color ::= AZUL {: reporteColor.put("AZUL", reporteColor.get("AZUL") + 1);  RESULT = Color.BLUE; :}
+        | ROJO {: reporteColor.put("ROJO", reporteColor.get("ROJO") + 1); RESULT = Color.RED; :}
+        | AMARILLO {: reporteColor.put("AMARILLO", reporteColor.get("AMARILLO") + 1); RESULT = Color.YELLOW; :}
         | VERDE {: reporteColor.put("VERDE", reporteColor.get("VERDE") + 1); RESULT =Color.GREEN;:}
         | ROSA {: reporteColor.put("ROSA", reporteColor.get("ROSA") + 1); RESULT = Color.PINK; :}
         | BLANCO {: reporteColor.put("BLANCO", reporteColor.get("NEGRO") + 1); RESULT = Color.WHITE; :}

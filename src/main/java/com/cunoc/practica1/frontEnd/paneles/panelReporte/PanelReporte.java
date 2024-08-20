@@ -43,7 +43,7 @@ public class PanelReporte extends JPanel implements ActionListener {
     private HashMap<String, Integer> reporteColor;
     private HashMap<String, Integer> reporteFigura;
     private HashMap<String, Integer> reporteAnimacion;
-    private List< Operadores> operador;
+    private List<Operadores> operador;
 
     private JTable tablaReporte = null;
     private JScrollPane scrollPane = null;
@@ -132,11 +132,13 @@ public class PanelReporte extends JPanel implements ActionListener {
 
             // añadir datos:
 
-            for (Operadores operador : operador) {
-                model.addRow(new Object[] { operador.getOperador(), operador.getLinea(), operador.getColumna(),
-                        operador.getOcurrencia() });
-            }
+            if (operador != null) {
 
+                for (Operadores operador : operador) {
+                    model.addRow(new Object[] { operador.getOperador(), operador.getLinea(), operador.getColumna(),
+                            operador.getOcurrencia() });
+                }
+            }
 
         } else if (numero == 2) {
             model.addColumn("Color");
@@ -144,11 +146,14 @@ public class PanelReporte extends JPanel implements ActionListener {
 
             // añadir datos:
             // Recorre el HashMap reporteColor
-            for (Map.Entry<String, Integer> entry : reporteColor.entrySet()) {
-                String color = entry.getKey(); // Obtiene la clave (en este caso, el código del color)
-                Integer cantidad = entry.getValue(); // Obtiene el valor (en este caso, el número asociado al color)
+            if (reporteColor != null) {
 
-                model.addRow(new Object[] { color, cantidad });
+                for (Map.Entry<String, Integer> entry : reporteColor.entrySet()) {
+                    String color = entry.getKey(); // Obtiene la clave (en este caso, el código del color)
+                    Integer cantidad = entry.getValue(); // Obtiene el valor (en este caso, el número asociado al color)
+
+                    model.addRow(new Object[] { color, cantidad });
+                }
             }
 
         } else if (numero == 3) {
@@ -156,11 +161,13 @@ public class PanelReporte extends JPanel implements ActionListener {
             model.addColumn("Cantidad de uso");
             // Añadir datos a la columa:
 
-            for (Map.Entry<String, Integer> entry : reporteFigura.entrySet()) {
-                String color = entry.getKey(); // Obtiene la clave (en este caso, el código del color)
-                Integer cantidad = entry.getValue(); // Obtiene el valor (en este caso, el número asociado al color)
+            if (reporteFigura != null) {
+                for (Map.Entry<String, Integer> entry : reporteFigura.entrySet()) {
+                    String color = entry.getKey(); // Obtiene la clave (en este caso, el código del color)
+                    Integer cantidad = entry.getValue(); // Obtiene el valor (en este caso, el número asociado al color)
 
-                model.addRow(new Object[] { color, cantidad });
+                    model.addRow(new Object[] { color, cantidad });
+                }
             }
 
         } else if (numero == 4) {
@@ -168,13 +175,15 @@ public class PanelReporte extends JPanel implements ActionListener {
             model.addColumn("Cantidad de uso");
             // Añadir datos a las columnas:
 
-            for (Map.Entry<String, Integer> entry : reporteAnimacion.entrySet()) {
-                String color = entry.getKey(); // Obtiene la clave (en este caso, el código del color)
-                Integer cantidad = entry.getValue(); // Obtiene el valor (en este caso, el número asociado al color)
+            if (reporteAnimacion != null) {
 
-                model.addRow(new Object[] { color, cantidad });
+                for (Map.Entry<String, Integer> entry : reporteAnimacion.entrySet()) {
+                    String color = entry.getKey(); // Obtiene la clave (en este caso, el código del color)
+                    Integer cantidad = entry.getValue(); // Obtiene el valor (en este caso, el número asociado al color)
+
+                    model.addRow(new Object[] { color, cantidad });
+                }
             }
-
         } else if (numero == 5) {
             model.addColumn("Lexema");
             model.addColumn("Línea");
@@ -182,35 +191,37 @@ public class PanelReporte extends JPanel implements ActionListener {
             model.addColumn("Tipo");
             model.addColumn("Descripcion");
             // Añadir datos a las nuevas columnas (si es necesario)
-           
-            for (Errores error : listaErrores) {
-                model.addRow(new Object[] { error.getLexema(), error.getLinea(), error.getColumna(), error.getTipo(),
-                        error.getDescripcion() });
+            if (listaErrores != null) {
+                for (Errores error : listaErrores) {
+                    model.addRow(
+                            new Object[] { error.getLexema(), error.getLinea(), error.getColumna(), error.getTipo(),
+                                    error.getDescripcion() });
+                }
+
             }
 
+            tablaReporte = new JTable(model);
+            tablaReporte.setFont(new Font("Arial", Font.PLAIN, 13)); // Cambia la fuente
+            tablaReporte.setRowHeight(30); // Cambia la altura de las filas
+            tablaReporte.setIntercellSpacing(new Dimension(0, 0)); // Elimina el espaciado entre celdas
+            tablaReporte.setLocation(0, 0);
+
+            // Personaliza el encabezado de la tabla
+            JTableHeader header = tablaReporte.getTableHeader();
+            header.setFont(new Font("Arial", Font.BOLD, 14)); // Cambia la fuente del encabezado
+            header.setBackground(new Color(255, 182, 193)); // Cambia el color de fondo del encabezado
+            header.setForeground(Color.black); // Cambia el color del texto del encabezado
+
+            scrollPane = new JScrollPane(tablaReporte);
+            scrollPane.setBorder(BorderFactory.createEmptyBorder()); // Elimina el borde del JScrollPane
+            scrollPane.setPreferredSize(new Dimension(500, 400)); // Establece el tamaño preferido
+            scrollPane.setBounds(25, 100, 550, 475);
+
+            this.add(scrollPane);
+
+            this.repaint();
+            this.revalidate();
         }
-
-        tablaReporte = new JTable(model);
-        tablaReporte.setFont(new Font("Arial", Font.PLAIN, 13)); // Cambia la fuente
-        tablaReporte.setRowHeight(30); // Cambia la altura de las filas
-        tablaReporte.setIntercellSpacing(new Dimension(0, 0)); // Elimina el espaciado entre celdas
-        tablaReporte.setLocation(0, 0);
-
-        // Personaliza el encabezado de la tabla
-        JTableHeader header = tablaReporte.getTableHeader();
-        header.setFont(new Font("Arial", Font.BOLD, 14)); // Cambia la fuente del encabezado
-        header.setBackground(new Color(255, 182, 193)); // Cambia el color de fondo del encabezado
-        header.setForeground(Color.black); // Cambia el color del texto del encabezado
-
-        scrollPane = new JScrollPane(tablaReporte);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder()); // Elimina el borde del JScrollPane
-        scrollPane.setPreferredSize(new Dimension(500, 400)); // Establece el tamaño preferido
-        scrollPane.setBounds(25, 100, 550, 475);
-
-        this.add(scrollPane);
-
-        this.repaint();
-        this.revalidate();
     }
 
     @Override

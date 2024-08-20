@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java_cup.runtime.*;
-import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
   */
@@ -326,6 +325,14 @@ public class parser extends java_cup.runtime.lr_parser {
     private String factor ="";
     private boolean factorF = false;
 
+    
+public void terminarAnalisis() {
+    // Verificar si graficaAux no es null y agregarla a listaGrafica
+    if (graficaAux != null) {
+        listaGrafica.add(graficaAux);
+        graficaAux = null;
+    }
+}
 
 
 

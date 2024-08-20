@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import com.cunoc.practica1.frontEnd.accionesBotton.utils.LogicaArchivos;
 import com.cunoc.practica1.frontEnd.accionesBotton.utils.Message;
-
+import com.cunoc.practica1.Main;
 import com.cunoc.practica1.frontEnd.VentanPrincipal;
 import com.cunoc.practica1.frontEnd.compnents.ConstructorBotton;
 import com.cunoc.practica1.frontEnd.paneles.panelEscritura.Panel1;
@@ -44,6 +44,7 @@ public class AccionBoton implements ActionListener {
             } else if (botones.getText().equals("Compilar")) {
             
                 conexion.ejecutar(Panel1Escritura.getText());
+                    Message.mostrarConfirmacion("Archivo leido", "Compilado");
 
             } else if (botones.getText().equals("Limpiar")) {
 
@@ -51,8 +52,7 @@ public class AccionBoton implements ActionListener {
                 Panel1Escritura.setText("");
             } else if (botones.getText().equals("Animar")) {
                 /// ayuda
-                conexion.ordenar();
-                conexion.animacionSecuencial();
+                conexion.comenzarAnimar();
 
             } else if (botones.getText().equals("Exportar")) {
                 conexion.exportar();
@@ -61,6 +61,10 @@ public class AccionBoton implements ActionListener {
                 System.out.println(" mostra tabla ");
                 conexion.reportes();
 
+            }else if (botones.getText().equals("Reiniciar")) {
+                System.out.println(" reiniciar ");
+                Main.reiniciarPrograma();
+                
             }
             
         }
