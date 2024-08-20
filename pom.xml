@@ -132,7 +132,7 @@
             <configuration>
               <archive>
                 <manifest>
-                  <mainClass>com.cunoc.practica1.App</mainClass>
+                  <mainClass>com.cunoc.practica1.Main</mainClass>
                 </manifest>
               </archive>
               <descriptorRefs>
