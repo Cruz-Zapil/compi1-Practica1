@@ -8,35 +8,34 @@ package com.cunoc.practica1.backEnd.AFND;
 /** CUP generated interface containing symbol constants. */
 public interface sym {
   /* terminals */
-  public static final int GRIS = 26;
+  public static final int GRIS = 25;
   public static final int TIMES = 15;
   public static final int LINEA = 6;
   public static final int PLUS = 13;
   public static final int RPAREN = 12;
-  public static final int CURVA = 28;
-  public static final int BLANCO = 23;
+  public static final int CURVA = 27;
+  public static final int BLANCO = 22;
   public static final int ANIMAR = 9;
   public static final int CUADRADO = 4;
-  public static final int VERDE = 21;
+  public static final int VERDE = 20;
   public static final int LPAREN = 11;
-  public static final int ROJO = 19;
+  public static final int ROJO = 18;
   public static final int GRAFICAR = 2;
-  public static final int AMARILLO = 20;
+  public static final int AMARILLO = 19;
   public static final int COMA = 10;
   public static final int NOMBRE = 8;
   public static final int EOF = 0;
   public static final int DIVIDE = 16;
-  public static final int CELESTE = 24;
-  public static final int OBJETO_ANTERIOR = 27;
-  public static final int NEWLINE = 17;
+  public static final int CELESTE = 23;
+  public static final int OBJETO_ANTERIOR = 26;
   public static final int MINUS = 14;
-  public static final int NUMERO = 29;
+  public static final int NUMERO = 28;
   public static final int error = 1;
   public static final int POLIGONO = 7;
   public static final int CIRCULO = 3;
-  public static final int ROSA = 22;
-  public static final int AZUL = 18;
-  public static final int NARANJA = 25;
+  public static final int ROSA = 21;
+  public static final int AZUL = 17;
+  public static final int NARANJA = 24;
   public static final int RECTANGULO = 5;
   public static final String[] terminalNames = new String[] {
   "EOF",
@@ -56,7 +55,6 @@ public interface sym {
   "MINUS",
   "TIMES",
   "DIVIDE",
-  "NEWLINE",
   "AZUL",
   "ROJO",
   "AMARILLO",

@@ -60,7 +60,7 @@ public class Conexion {
                 reporteOperadores= cupParser.getReporteOperacion();
 
             } catch (Exception e) {
-                //e.printStackTrace();
+                e.printStackTrace();
                 System.out.println(" Error al conectar con lexer, prube reiniciando");
             }
 
@@ -119,11 +119,18 @@ public class Conexion {
             }
             listaGraficaEnviado.set(j + 1, auxi);
         }
+
+        Message.mostrarConfirmacion("W", "dkha");
+        for (Grafica h : listaGraficaEnviado){
+
+            System.out.println(h.getNombre());
+            Message.mostrarConfirmacion(h.getNombre(), "grafica");
+        }
     }
     
     // Método para animar las figuras en secuencia
     public void animacionSecuencial() {
-        ordenar(); // Ordenar la lista de gráficos según el orden de animación
+        t=0;
 
         if (indiceAnimacionActual < listaGraficaEnviado.size()) {
             Grafica figuraActual = listaGraficaEnviado.get(indiceAnimacionActual);
@@ -132,18 +139,21 @@ public class Conexion {
                 Timer timer = new Timer(16, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        t += 0.01; // Incrementar el tiempo para la animación
+                        t += 0.005; // Incrementar el tiempo para la animación
 
                         // Realizar la animación de la figura actual
                         if (figuraActual.getAnimacion().getTipoAnimacion().equals("CURVA")) {
+
                             // Movimiento a lo largo de una curva senoidal
-                            int x = (int) (figuraActual.getAnimacion().getDestinoX() + 100 * Math.sin(t));
-                            int y = (int) (figuraActual.getAnimacion().getDestinoY() + 100 * Math.cos(t));
+                            int x = (int) (figuraActual.getPosx() + 100 * Math.sin(t));
+                            int y = (int) (figuraActual.getPosy() + 100 * Math.cos(t));
                             figuraActual.mover(x, y);
+                            
                         } else if (figuraActual.getAnimacion().getTipoAnimacion().equals("LINEA")) {
                             // Movimiento en línea recta hacia un destino
-                            figuraActual.mover((int) figuraActual.getAnimacion().getDestinoX(),
-                                    (int) figuraActual.getAnimacion().getDestinoY());
+                            int xl = (int )(figuraActual.getPosx()+figuraActual.getAnimacion().getDestinoX() * t);
+                            int yl =(int )(figuraActual.getPosy()+figuraActual.getAnimacion().getDestinoY() * t);
+                            figuraActual.mover(xl,yl);
                         }
 
                         panelGrafico.repaint(); // Redibujar el panel

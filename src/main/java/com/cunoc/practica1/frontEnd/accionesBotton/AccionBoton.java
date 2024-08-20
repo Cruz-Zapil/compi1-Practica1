@@ -42,14 +42,16 @@ public class AccionBoton implements ActionListener {
                   conexion.graficar();
             
             } else if (botones.getText().equals("Compilar")) {
+            
                 conexion.ejecutar(Panel1Escritura.getText());
 
             } else if (botones.getText().equals("Limpiar")) {
+
                 /// limpiar
                 Panel1Escritura.setText("");
             } else if (botones.getText().equals("Animar")) {
                 /// ayuda
-                
+                conexion.ordenar();
                 conexion.animacionSecuencial();
 
             } else if (botones.getText().equals("Exportar")) {

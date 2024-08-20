@@ -7,6 +7,9 @@ import com.cunoc.practica1.backEnd.objetos.Rectangulo;
 import com.cunoc.practica1.backEnd.objetos.animation.Animacion;
 import com.cunoc.practica1.backEnd.objetos.Circulo;
 import com.cunoc.practica1.backEnd.objetos.Cuadrado;
+import com.cunoc.practica1.backEnd.report.Errores;
+import com.cunoc.practica1.backEnd.report.Operadores;
+import com.cunoc.practica1.frontEnd.paneles.panelReporte.PanelReporte;
 
 import java.awt.Color;
 import java.util.HashMap;
@@ -25,7 +28,8 @@ parser code {:
     public void syntax_error(Symbol s){ 
         System.out.println("Error Sintáctico en la Línea " + (s.left) +
         " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
-        PanelReporte.agregarError(new Errores("Sintactico",(String) s.value,"no se esperaba: "+s.value, s.left, s.right));
+
+        PanelReporte.agregarError(new Errores("Sintactico",String.valueOf(s.value),"no se esperaba: "+String.valueOf( s.value), s.left, s.right));
     } 
     /**
      * Método al que se llama cuando se identifica un error sintáctico en el que 
@@ -103,6 +107,8 @@ parser code {:
     public HashMap<String, Integer> gerReporteAnimacion(){
         return reporteAnimacion;
     }
+    private String factor ="";
+    private boolean factorF = false;
 
 
 
@@ -111,7 +117,7 @@ parser code {:
 
 // Definir terminales
 terminal String GRAFICAR, CIRCULO, CUADRADO, RECTANGULO, LINEA, POLIGONO, NOMBRE, ANIMAR;
-terminal String COMA, LPAREN, RPAREN, PLUS, MINUS, TIMES, DIVIDE, NEWLINE;
+terminal String COMA, LPAREN, RPAREN, PLUS, MINUS, TIMES, DIVIDE;
 
 terminal String AZUL, ROJO, AMARILLO, VERDE, ROSA, BLANCO, CELESTE, NARANJA, GRIS;
 
@@ -130,10 +136,8 @@ start with instrucciones;
 ///  Definir la gramatica: 
 
 
-instrucciones ::= instruccion: i NEWLINE instrucciones: is 
-                | instruccion: i NEWLINE
-                | instruccion: i
-                | NEWLINE
+instrucciones ::= instruccion: i   instrucciones: is 
+                | instruccion: i 
                 | error instrucciones;
 
 
@@ -159,7 +163,7 @@ instruccion ::= GRAFICAR CIRCULO LPAREN NOMBRE:n COMA expre:posx COMA expre:posy
                         graficaAux = new Cuadrado(n,null,posx,posy,c,l);
 
                   :}
-                | GRAFICAR RECTANGULO LPAREN NOMBRE:n COMA expre:posx COMA expre:posy COMA expre:a COMA expre:al COMA color:c RPAREN
+                | GRAFICAR RECTANGULO LPAREN NOMBRE:n COMA expre:posx COMA expre:posy COMA expre:a COMA expre:al COMA color:c  RPAREN 
                 {: reporteFigura.put("RECTANGULO", reporteFigura.get("RECTANGULO") +1);
                    System.out.println(" graficar rectangulo ( "+ n +", "+ posx +" , "+ posy +" , "+ a+" , "+ al + " , "+ c+" )"); 
                 
@@ -171,7 +175,7 @@ instruccion ::= GRAFICAR CIRCULO LPAREN NOMBRE:n COMA expre:posx COMA expre:posy
                         graficaAux = new Rectangulo(n,null,posx,posy,c,a,al);
 
                  :}
-                | GRAFICAR LINEA LPAREN NOMBRE:n COMA expre:posx COMA expre:posy COMA expre:posx2 COMA expre:posy2 COMA color:c RPAREN
+                | GRAFICAR LINEA LPAREN NOMBRE:n COMA expre:posx COMA expre:posy COMA expre:posx2 COMA expre:posy2 COMA color:c RPAREN 
                 {: reporteFigura.put("LINEA", reporteFigura.get("LINEA") +1);
                    System.out.println(" graficar linea ( "+ n +", "+ posx +" , "+ posy +" , "+" , "+ posx2+" , "+ posy2+ " , "+ c+ " )");
                         if (graficaAux !=null){
@@ -181,7 +185,7 @@ instruccion ::= GRAFICAR CIRCULO LPAREN NOMBRE:n COMA expre:posx COMA expre:posy
 
                         graficaAux = new Linea(n,null,posx,posy,c,posx2,posy2);
                  :}
-                | GRAFICAR POLIGONO LPAREN NOMBRE:n COMA expre:posx COMA expre:posy COMA expre:cl COMA expre:l COMA expre:h COMA color:c RPAREN
+                | GRAFICAR POLIGONO LPAREN NOMBRE:n COMA expre:posx COMA expre:posy COMA expre:cl COMA expre:l COMA expre:h COMA color:c  RPAREN 
                 {:  reporteFigura.put("POLIGONO", reporteFigura.get("POLIGONO") +1); 
                     System.out.println(" graficar poligono ( "+ n +", "+ posx +" , "+ posy +" , "+ cl + " , "+ l+" , "+h+" , "+ c +" )");
                       if (graficaAux !=null){
@@ -189,7 +193,7 @@ instruccion ::= GRAFICAR CIRCULO LPAREN NOMBRE:n COMA expre:posx COMA expre:posy
                          }
                         graficaAux = new Poligono(n,null,posx,posy,c,cl,l,h);
                  :}
-                 | ANIMAR OBJETO_ANTERIOR LPAREN tipo_animacion:ta COMA expre:dx COMA expre:dy COMA expre:or RPAREN
+                 | ANIMAR OBJETO_ANTERIOR LPAREN tipo_animacion:ta COMA expre:dx COMA expre:dy COMA expre:or RPAREN 
                  {:
 
                  Animacion nuevaAnimacion = new Animacion(ta,dx,dy,or);
@@ -219,6 +223,7 @@ tipo_animacion::= CURVA {:RESULT="CURVA";:}
                 | LINEA {:RESULT="LINEA";:};
 
 // Operaciones matemáticas
+
 expre ::= expre:e1 PLUS term:e2
             {: 
                 // Obtener la línea y columna del primer símbolo (e1)
@@ -249,7 +254,7 @@ term ::= term:t TIMES factor:f
             int linea = tleft;
             int columna = tright;
            // Reporte de multiplicación
-           String operacion = t + " * " + f;
+           String operacion = t + " * " + factor;
            reporteOperaciones.add( new Operadores("Multiplicación",linea,columna,operacion));
            RESULT =t * f ; 
        :}
@@ -259,30 +264,20 @@ term ::= term:t TIMES factor:f
             int linea = tleft;
             int columna = tright;
            // Reporte de división
-           String operacion = t + " / " + f;
+           String operacion = t + " / " + factor;
 
            reporteOperaciones.add( new Operadores("División",linea,columna,operacion));
            RESULT = t / f ; 
        :}
        | factor:f
-       {:
-                // Obtener la línea y columna del primer símbolo (n)
-                int linea =  fleft;
-                int columna =  fright;
-                // Reporte de número
-                reporteOperaciones.add(new Operadores("Factor",linea,columna,(String)f.value));
-       
-       
-        RESULT = f; :};
+       {: RESULT = f; :};
 
 factor ::= LPAREN expre:e RPAREN
-         {: RESULT = e; :}
+         {:
+          factor ="( " + e +" )";
+          RESULT = e; :}
          | NUMERO:n
          {:
-                // Obtener la línea y columna del primer símbolo (n)
-                int linea = nleft;
-                int columna =  nright;
-                // Reporte de número
-                reporteOperaciones.add(new Operadores("Número",linea,columna,(Sting)n.value));
+                factor = String.valueOf( n);
                 RESULT = n;
          :};
