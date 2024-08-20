@@ -383,6 +383,7 @@ class CUP$parser$actions {
               Object RESULT =null;
 		
                     if(graficaAux!=null){
+                        System.out.println("la ultima grafica es: "+ graficaAux.getNombre());
                         listaGrafica.add(graficaAux);
                         graficaAux = null;
                     }
@@ -397,6 +398,7 @@ class CUP$parser$actions {
               Object RESULT =null;
 		
                     if(graficaAux!=null){
+                      System.out.println("la ultima grafica es: "+ graficaAux.getNombre());
                         listaGrafica.add(graficaAux);
                         graficaAux = null;
                     }

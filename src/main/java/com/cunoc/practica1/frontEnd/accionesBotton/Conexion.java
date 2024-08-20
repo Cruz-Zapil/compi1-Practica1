@@ -29,12 +29,10 @@ public class Conexion {
     private HashMap<String, Integer> reporteColor;
     private HashMap<String, Integer> reporteFigura;
     private HashMap<String, Integer> reporteAnimacion;
-    private List<Operadores> reporteOperadores ;
+    private List<Operadores> reporteOperadores;
 
     // lista de errores
     // Lista común para los errores
-
-
 
     private double t = 0;
     private int indiceAnimacionActual = 0; // Controla qué figura está siendo animada
@@ -57,20 +55,20 @@ public class Conexion {
                 reporteColor = cupParser.getReporteColor();
                 reporteFigura = cupParser.getReporteFigura();
                 reporteAnimacion = cupParser.gerReporteAnimacion();
-                reporteOperadores= cupParser.getReporteOperacion();
+                reporteOperadores = cupParser.getReporteOperacion();
 
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println(" Error al conectar con lexer, prube reiniciando");
             }
 
-        }else {
+        } else {
             Message.mostrarMensajeError("No hay ningun texto ", "ERROR");
         }
     }
 
     public void reportes() {
-        PanelReporte panelReporte = new PanelReporte(reporteColor, reporteFigura, reporteAnimacion,reporteOperadores);
+        PanelReporte panelReporte = new PanelReporte(reporteColor, reporteFigura, reporteAnimacion, reporteOperadores);
         VentanPrincipal.addPanelDerecho(panelReporte);
     }
 
@@ -81,24 +79,23 @@ public class Conexion {
     }
 
     /// exportar imgen
-    public void exportar(){
+    public void exportar() {
         panelGrafico.guardarPanel();
     }
 
-    
     public void ordenar() {
 
         int n = listaGraficaEnviado.size();
         for (int i = 1; i < n; i++) {
             Grafica auxi = listaGraficaEnviado.get(i);
             int j = i - 1;
-    
+
             // mover los elementos
             while (j >= 0) {
-    
+
                 Animacion animacionActual = listaGraficaEnviado.get(j).getAnimacion();
                 Animacion animacionAuxi = auxi.getAnimacion();
-    
+
                 if (animacionActual == null && animacionAuxi == null) {
                     break;
                 } else if (animacionActual == null) {
@@ -115,45 +112,159 @@ public class Conexion {
                         break;
                     }
                 }
-    
+
             }
             listaGraficaEnviado.set(j + 1, auxi);
         }
 
         Message.mostrarConfirmacion("W", "dkha");
-        for (Grafica h : listaGraficaEnviado){
+        for (Grafica h : listaGraficaEnviado) {
 
             System.out.println(h.getNombre());
             Message.mostrarConfirmacion(h.getNombre(), "grafica");
         }
     }
-    
+
     // Método para animar las figuras en secuencia
     public void animacionSecuencial() {
         t=0;
 
         if (indiceAnimacionActual < listaGraficaEnviado.size()) {
             Grafica figuraActual = listaGraficaEnviado.get(indiceAnimacionActual);
+              /// posx y posy
+            
+                int tmpDX = (int)figuraActual.getAnimacion().getDestinoX();
+                int tmpDY =  (int)figuraActual.getAnimacion().getDestinoY();
+
 
             if (figuraActual.getAnimacion() != null) {
                 Timer timer = new Timer(16, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         t += 0.005; // Incrementar el tiempo para la animación
+                        
+                        /// movimiento en variable 
+                        int tmposX = (int) figuraActual.getPosx();
+                        int tmposY = (int)figuraActual.getPosy();
 
                         // Realizar la animación de la figura actual
                         if (figuraActual.getAnimacion().getTipoAnimacion().equals("CURVA")) {
 
-                            // Movimiento a lo largo de una curva senoidal
-                            int x = (int) (figuraActual.getPosx() + 100 * Math.sin(t));
-                            int y = (int) (figuraActual.getPosy() + 100 * Math.cos(t));
+                            // movimiento a
+                            if (tmposX > tmpDX && tmposY > tmpDY) {
+
+                                  // Movdimiento a lo largo de una curva senoidal
+                            int x = (int) (tmpDX - 10 * Math.sin(t));
+                            int y = (int) (tmpDX - 10 * Math.cos(t));
                             figuraActual.mover(x, y);
+                                // movimiento b
+                            }else if ( tmposX == tmpDX && tmposY > tmpDY) {
+                                 
+                                int y = (int) (tmpDX - 10 * Math.cos(t));
+                                figuraActual.mover(tmposX, y);
+                        
+                                // movimiento c
+                        }else if ( tmposX < tmpDX && tmposY > tmpDY) {
+                            int x = (int) (tmpDX + 10 * Math.sin(t));
+                            int y = (int) (tmpDX - 10 * Math.cos(t));
+                            figuraActual.mover(x, y);
+
+                            /// movimiento d
+                        }else if ( tmposX > tmpDX && tmposY == tmpDY) {
+                            int x = (int) (tmpDX - 10 * Math.sin(t));
+                            figuraActual.mover(x, tmposY);
+
+                            // movimeinto e
+                        }else if ( tmposX < tmpDX && tmposY == tmpDY) {
+                            int x = (int) (tmpDX + 10 * Math.sin(t));
+                            figuraActual.mover(x, tmposY);
+
+                            /// movimiento f
+                        }else if ( tmposX > tmpDX && tmposY < tmpDY) {
+                            int x = (int) (tmpDX - 10 * Math.sin(t));
+                            int y = (int) (tmpDX + 10 * Math.cos(t));
+                            figuraActual.mover(x, y);
+
+                            /// movimiento g
+
+                        }else if ( tmposX == tmpDX && tmposY < tmpDY) {
+                            int y = (int) (tmpDX + 10 * Math.cos(t));
+                            figuraActual.mover(tmposX,  y);
+
+                            /// movimiento h
+                        }else if ( tmposX < tmpDX && tmposY < tmpDY) {
+                            int x = (int) (tmpDX + 10 * Math.sin(t));
+                            int y = (int) (tmpDX + 10 * Math.cos(t));
+                            figuraActual.mover(x, y);
+                        }else if (tmposX == tmpDX && tmposY == tmpDY) {
+                            Message.mostrarMensajeInfo("La figura: "+ figuraActual.getNombre() +" llego a su destino", "Info");
+
+                            ((Timer) e.getSource()).stop(); // Detener el timer de la animación actual
+                            indiceAnimacionActual++; // Pasar a la siguiente figura
+                            animacionSecuencial(); // Llamar nuevamente para animar la siguiente figura
+                        }
                             
                         } else if (figuraActual.getAnimacion().getTipoAnimacion().equals("LINEA")) {
+
                             // Movimiento en línea recta hacia un destino
                             int xl = (int )(figuraActual.getPosx()+figuraActual.getAnimacion().getDestinoX() * t);
                             int yl =(int )(figuraActual.getPosy()+figuraActual.getAnimacion().getDestinoY() * t);
-                            figuraActual.mover(xl,yl);
+                         
+
+                            if (tmposX > tmpDX && tmposY > tmpDY) {
+
+                                // Movdimiento a lo largo de una curva senoidal
+                          int x = (int) (tmpDX - 10 * t);
+                          int y = (int) (tmpDX - 10 * t);
+                          figuraActual.mover(x, y);
+                              // movimiento b
+                          }else if ( tmposX == tmpDX && tmposY > tmpDY) {
+                               
+                              int y = (int) (tmpDX - 10 * t);
+                              figuraActual.mover(tmposX, y);
+                      
+                              // movimiento c
+                      }else if ( tmposX < tmpDX && tmposY > tmpDY) {
+                          int x = (int) (tmpDX + 10 * t);
+                          int y = (int) (tmpDX - 10 * t);
+                          figuraActual.mover(x, y);
+
+                          /// movimiento d
+                      }else if ( tmposX > tmpDX && tmposY == tmpDY) {
+                          int x = (int) (tmpDX - 10 * t);
+                          figuraActual.mover(x, tmposY);
+
+                          // movimeinto e
+                      }else if ( tmposX < tmpDX && tmposY == tmpDY) {
+                          int x = (int) (tmpDX + 10 * t);
+                          figuraActual.mover(x, tmposY);
+
+                          /// movimiento f
+                      }else if ( tmposX > tmpDX && tmposY < tmpDY) {
+                          int x = (int) (tmpDX - 10 * t);
+                          int y = (int) (tmpDX + 10 * t);
+                          figuraActual.mover(x, y);
+
+                          /// movimiento g
+
+                      }else if ( tmposX == tmpDX && tmposY < tmpDY) {
+                          int y = (int) (tmpDX + 10 * t);
+                          figuraActual.mover(tmposX,  y);
+
+                          /// movimiento h
+                      }else if ( tmposX < tmpDX && tmposY < tmpDY) {
+                          int x = (int) (tmpDX + 10 * t);
+                          int y = (int) (tmpDX + 10 * t);
+                          figuraActual.mover(x, y);
+                      }else if (tmposX == tmpDX && tmposY == tmpDY) {
+                          Message.mostrarMensajeInfo("La figura: "+ figuraActual.getNombre() +" llego a su destino", "Info");
+
+                          ((Timer) e.getSource()).stop(); // Detener el timer de la animación actual
+                          indiceAnimacionActual++; // Pasar a la siguiente figura
+                          animacionSecuencial(); // Llamar nuevamente para animar la siguiente figura
+                      }
+
+
                         }
 
                         panelGrafico.repaint(); // Redibujar el panel
