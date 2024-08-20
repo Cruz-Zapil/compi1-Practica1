@@ -132,13 +132,13 @@ public class PanelReporte extends JPanel implements ActionListener {
 
             // añadir datos:
 
-            if (operador != null) {
-
+          
+                System.out.println("monstrando reporte de operadores");
                 for (Operadores operador : operador) {
                     model.addRow(new Object[] { operador.getOperador(), operador.getLinea(), operador.getColumna(),
                             operador.getOcurrencia() });
                 }
-            }
+            
 
         } else if (numero == 2) {
             model.addColumn("Color");
@@ -147,7 +147,7 @@ public class PanelReporte extends JPanel implements ActionListener {
             // añadir datos:
             // Recorre el HashMap reporteColor
             if (reporteColor != null) {
-
+                System.out.println("monstrando reporte de color");
                 for (Map.Entry<String, Integer> entry : reporteColor.entrySet()) {
                     String color = entry.getKey(); // Obtiene la clave (en este caso, el código del color)
                     Integer cantidad = entry.getValue(); // Obtiene el valor (en este caso, el número asociado al color)
@@ -162,6 +162,7 @@ public class PanelReporte extends JPanel implements ActionListener {
             // Añadir datos a la columa:
 
             if (reporteFigura != null) {
+                System.out.println("monstrando reporte de figura");
                 for (Map.Entry<String, Integer> entry : reporteFigura.entrySet()) {
                     String color = entry.getKey(); // Obtiene la clave (en este caso, el código del color)
                     Integer cantidad = entry.getValue(); // Obtiene el valor (en este caso, el número asociado al color)
@@ -176,6 +177,7 @@ public class PanelReporte extends JPanel implements ActionListener {
             // Añadir datos a las columnas:
 
             if (reporteAnimacion != null) {
+                System.out.println("monstrando reporte de animacion");
 
                 for (Map.Entry<String, Integer> entry : reporteAnimacion.entrySet()) {
                     String color = entry.getKey(); // Obtiene la clave (en este caso, el código del color)
@@ -192,6 +194,7 @@ public class PanelReporte extends JPanel implements ActionListener {
             model.addColumn("Descripcion");
             // Añadir datos a las nuevas columnas (si es necesario)
             if (listaErrores != null) {
+                System.out.println("monstrando reporte de errores");
                 for (Errores error : listaErrores) {
                     model.addRow(
                             new Object[] { error.getLexema(), error.getLinea(), error.getColumna(), error.getTipo(),
