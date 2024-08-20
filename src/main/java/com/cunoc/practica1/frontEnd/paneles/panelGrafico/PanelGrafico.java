@@ -32,6 +32,25 @@ public class PanelGrafico extends JPanel {
         graficas = figuras;
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        System.out.println("numero de figuras: " + graficas.size());
+
+        Graphics2D g2d = (Graphics2D) g; // Casting a Graphics2D
+        for (Grafica figura : graficas) {
+            figura.dibujar(g2d);
+            System.out.println("dibujando");
+        }
+    }
+
+
+
+
+
+
+
     public void guardarPanel (){
         System.out.println(" se va exportar el panel ");
 
@@ -64,17 +83,6 @@ public class PanelGrafico extends JPanel {
         }catch (IOException e) {
             e.printStackTrace();
 
-        }
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        Graphics2D g2d = (Graphics2D) g; // Casting a Graphics2D
-        for (Grafica figura : graficas) {
-            figura.dibujar(g2d);
-            System.out.println("dibujando");
         }
     }
 

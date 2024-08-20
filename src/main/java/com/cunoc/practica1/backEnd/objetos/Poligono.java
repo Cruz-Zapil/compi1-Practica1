@@ -1,7 +1,8 @@
 package com.cunoc.practica1.backEnd.objetos;
 
 import java.awt.Color;
-import java.awt.Graphics;
+
+import java.awt.Graphics2D;
 
 import com.cunoc.practica1.backEnd.objetos.animation.Animacion;
 
@@ -11,6 +12,7 @@ public class Poligono extends Grafica{
     private double cantLado;
     private double ancho;
     private double alto;
+    
 
     
     public Poligono(String nombre, Animacion animacion, Double posx, Double posy, Color color,Double cl, Double l, Double h) {
@@ -20,6 +22,7 @@ public class Poligono extends Grafica{
         this.ancho = l;
         this.alto = h;
         
+        
     }
 
     @Override
@@ -28,11 +31,26 @@ public class Poligono extends Grafica{
         super.setAnimacion(animacion);
     }
 
-    public void dibujar(Graphics g){
+    @Override
+    public void dibujar(Graphics2D g){
         g.setColor(super.getColor());
+
+
+        int centroX = (int) this.getPosx();
+        int centroY = (int) this.getPosy();
+        int lados = (int) this.cantLado;
+
+        int width = (int) this.ancho;
+        int height = (int) this.alto;
+
         int[] xpoint= new int[(int)cantLado];
         int[] ypoint= new int[(int)cantLado];
-        g.drawPolyline(xpoint, ypoint, (int)cantLado);
+
+        for (int i = 0; i < lados; i++) {
+            xpoint[i] = (int) (centroX + width * Math.cos(2 * Math.PI * i / lados));
+            ypoint[i] = (int) (centroY + height * Math.sin(2 * Math.PI * i / lados));
+        }
+        g.fillPolygon(xpoint, ypoint, (int)cantLado);
         
     }
 

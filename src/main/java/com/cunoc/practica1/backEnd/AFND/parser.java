@@ -381,7 +381,12 @@ class CUP$parser$actions {
           case 2: // instrucciones ::= instruccion 
             {
               Object RESULT =null;
-
+		
+                    if(graficaAux!=null){
+                        listaGrafica.add(graficaAux);
+                        graficaAux = null;
+                    }
+                
               CUP$parser$result = parser.getSymbolFactory().newSymbol("instrucciones",0, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -390,7 +395,12 @@ class CUP$parser$actions {
           case 3: // instrucciones ::= error instrucciones 
             {
               Object RESULT =null;
-
+		
+                    if(graficaAux!=null){
+                        listaGrafica.add(graficaAux);
+                        graficaAux = null;
+                    }
+                
               CUP$parser$result = parser.getSymbolFactory().newSymbol("instrucciones",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -420,7 +430,6 @@ class CUP$parser$actions {
                         if (graficaAux !=null){
                             listaGrafica.add(graficaAux);  
                         }
-
                         graficaAux = new Circulo(n,null,posx,posy,c,r);
 
                 
@@ -488,9 +497,7 @@ class CUP$parser$actions {
                 
                         if (graficaAux !=null){
                             listaGrafica.add(graficaAux);
-        
                          }
-
                         graficaAux = new Rectangulo(n,null,posx,posy,c,a,al);
 
                  
@@ -524,7 +531,6 @@ class CUP$parser$actions {
                    System.out.println(" graficar linea ( "+ n +", "+ posx +" , "+ posy +" , "+" , "+ posx2+" , "+ posy2+ " , "+ c+ " )");
                         if (graficaAux !=null){
                             listaGrafica.add(graficaAux);
-        
                          }
 
                         graficaAux = new Linea(n,null,posx,posy,c,posx2,posy2);
@@ -594,10 +600,9 @@ class CUP$parser$actions {
                         graficaAux= null;  
                         reporteAnimacion.put(ta,reporteAnimacion.get(ta)+1);                      
                     }else {
-                        System.out.println(" no hay grafica anteriro :C");
+                        System.out.println(" no hay grafica anterior :C");
                     };
                 
-
                  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("instruccion",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-10)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
